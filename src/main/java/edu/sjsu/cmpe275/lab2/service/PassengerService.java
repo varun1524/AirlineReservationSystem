@@ -12,8 +12,8 @@ public class PassengerService {
     @Autowired
     PassengerRepository passengerRepository;
 
-    public Passenger findPassengerById(String id){
-        return passengerRepository.findById(id);
+    public Passenger findByPassengerId(int id){
+        return passengerRepository.findByPassengerId(id);
     }
 
     public List<Passenger> findAllPassengers(){
