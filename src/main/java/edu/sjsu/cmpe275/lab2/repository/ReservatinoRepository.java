@@ -11,8 +11,6 @@ public interface ReservatinoRepository extends JpaRepository<Reservation, Intege
 
     List<Reservation> findAll();
 
-    List<Reservation> findAllByReservationNumber(int reservationNumber);
-
     List<Reservation> findByReservationNumber(int reservationNumber);
 
 }

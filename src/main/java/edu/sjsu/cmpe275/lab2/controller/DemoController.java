@@ -38,7 +38,7 @@ public class DemoController {
         List<Reservation> list = Collections.emptyList();
         try{
 
-            List<Flight> flightList = new LinkedList<>();
+            /*List<Flight> flightList = new LinkedList<>();
             flightList.add(flightService.findByFlightNumber("123"));
             flightList.add(flightService.findByFlightNumber("124"));
 
@@ -52,8 +52,8 @@ public class DemoController {
             System.out.println("price: " + price);
             reservation.setPrice(price);
             Reservation reservation1 = reservationService.save(reservation);
-            System.out.println(reservation1);
-            list = reservationService.findAll();
+            System.out.println(reservation1);*/
+            list = reservationService.findReservationsByID(2);
         }
         catch (Exception e){
             e.printStackTrace();

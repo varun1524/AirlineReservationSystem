@@ -20,8 +20,8 @@ public class ReservationService {
         return reservatinoRepository.findAll();
     }
 
-    public List<Reservation> findReservationsByID(){
-        return reservatinoRepository.findAll();
+    public List<Reservation> findReservationsByID(int reservationNumber){
+        return reservatinoRepository.findByReservationNumber(reservationNumber);
     }
 
 
