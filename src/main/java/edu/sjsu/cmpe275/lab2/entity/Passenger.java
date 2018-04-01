@@ -1,19 +1,24 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Passenger {
-    @Id
-    private String id;
 
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @Column(name = "passenger_id", nullable = false)
+    private int passengerId;
+
+    @Column(name = "first_name")
     private String firstname;
 
+    @Column(name = "last_name")
     private String lastname;
-
-    private String email;
 
     private int age;
 
@@ -22,12 +27,16 @@ public class Passenger {
     @Column(unique = true)
     private String phone; // Phone numbers must be unique
 
-    public String getId() {
-        return id;
+    @JsonManagedReference
+    @OneToMany(mappedBy="passenger")
+    private List<Reservation> reservations;
+
+    public int getPassengerId() {
+        return passengerId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPassengerId(int passengerId) {
+        this.passengerId = passengerId;
     }
 
     public String getFirstname() {
@@ -44,14 +53,6 @@ public class Passenger {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getAge() {
