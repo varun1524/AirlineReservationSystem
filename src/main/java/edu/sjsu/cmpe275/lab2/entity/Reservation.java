@@ -1,11 +1,12 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reservationNumber")
+//@JsonIgnoreProperties(allowSetters = true, value = { "passenger" })
 @Entity
 @Table(name = "reservation")
 public class Reservation {
@@ -17,7 +18,7 @@ public class Reservation {
 
     private double price; // sum of each flight’s price.
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;

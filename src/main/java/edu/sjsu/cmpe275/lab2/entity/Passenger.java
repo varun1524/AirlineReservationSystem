@@ -1,10 +1,13 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "passengerId")
 @Entity
 public class Passenger {
 
@@ -27,7 +30,7 @@ public class Passenger {
     @Column(unique = true)
     private String phone; // Phone numbers must be unique
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy="passenger")
     private List<Reservation> reservations;
 
@@ -77,5 +80,13 @@ public class Passenger {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
