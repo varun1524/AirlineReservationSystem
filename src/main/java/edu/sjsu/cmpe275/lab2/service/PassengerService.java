@@ -12,6 +12,10 @@ public class PassengerService {
     @Autowired
     PassengerRepository passengerRepository;
 
+    public Passenger save(Passenger passenger){
+        return passengerRepository.save(passenger);
+    }
+
     public Passenger findByPassengerId(int id){
         return passengerRepository.findByPassengerId(id);
     }
