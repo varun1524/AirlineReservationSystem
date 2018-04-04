@@ -135,4 +135,12 @@ public class Flight {
     public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
     }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }
