@@ -26,8 +26,7 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
-    public ResponseEntity findByFlightNumber(String flightNumber){
-        Flight flightObj = null;
+    public ResponseEntity findByFlightNumber(String flightNumber, boolean responseType){
         HttpStatus status = null;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -36,8 +35,13 @@ public class FlightService {
                 status = HttpStatus.OK;
                 jsonObject.put("flight", new JSONObject(flight));
                 jsonObject.getJSONObject("flight").remove("reservations");
-                flightObj = flight;
                 System.out.println(jsonObject);
+                if(responseType){
+                    return new ResponseEntity(XML.toString(jsonObject), status);
+                }
+                else {
+                    return new ResponseEntity(jsonObject.toString(), status);
+                }
             }
             else {
                 JSONObject jsonObject1 = new JSONObject();
@@ -49,8 +53,7 @@ public class FlightService {
         catch (Exception e){
             e.printStackTrace();
         }
-        return new ResponseEntity(jsonObject.toString(), status);
-//        return new ResponseEntity(flightObj, status);
+        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity addOrUpdateFlight(String flightNumber, Map<String, String> params){

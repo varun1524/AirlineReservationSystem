@@ -2,8 +2,10 @@ package edu.sjsu.cmpe275.lab2.controller;
 
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.service.FlightService;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +37,8 @@ public class FlightController {
         return new ResponseEntity(flightList, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{flightNumber}")
-    public ResponseEntity FetchFlight(@PathVariable(value = "flightNumber") String flightNumber){
+    /*@GetMapping(path = "/{flightNumber}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity fetchFlight(@PathVariable(value = "flightNumber") String flightNumber){
         ResponseEntity responseEntity = null;
         HttpStatus status = null;
         try{
@@ -47,7 +49,29 @@ public class FlightController {
             e.printStackTrace();
         }
         return responseEntity;
+    }*/
+
+    @GetMapping(path = "/{flightNumber}")
+    public ResponseEntity fetchFlight(@PathVariable(value = "flightNumber") String flightNumber,
+                                      @RequestParam(value = "xml", required = false) String xml){
+        ResponseEntity responseEntity = null;
+        HttpStatus status = null;
+        try{
+            System.out.println("flightNumber: " + flightNumber);
+            System.out.println("XML: " + xml);
+            boolean isResponseTypeXML = false;
+            if(xml!=null && xml.equals("true")){
+                isResponseTypeXML = true;
+            }
+            responseEntity = flightService.findByFlightNumber(flightNumber, isResponseTypeXML);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseEntity;
     }
+
+
 
     @PostMapping(path = "/{flightNumber}")
     public ResponseEntity createFlight(@PathVariable(value = "flightNumber") String flightNumber, @RequestParam Map<String, String> params){
