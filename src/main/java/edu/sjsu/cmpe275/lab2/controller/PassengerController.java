@@ -42,5 +42,8 @@ public class PassengerController {
     }
 
     //Delete passenger. API 5
-
+    @DeleteMapping(path = "/{id}")
+    public void deletePassenger(@PathVariable("id") String id){
+        passengerService.deletePassenger(id);
+    }
 }
