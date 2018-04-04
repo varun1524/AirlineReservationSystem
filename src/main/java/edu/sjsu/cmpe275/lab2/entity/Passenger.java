@@ -32,20 +32,19 @@ public class Passenger {
     @Column(unique = true)
     private String phone; // Phone numbers must be unique
 
-//    @JsonManagedReference
     @OneToMany(mappedBy="passenger")
     private List<Reservation> reservations;
 
     /*@JsonIgnore
-    @ManyToMany(mappedBy = "flights")
-    private List<Flight> passengers;
+    @ManyToMany(mappedBy = "passengers")
+    private List<Flight> flights;
 
-    public List<Flight> getPassengers() {
-        return passengers;
+    public List<Flight> getFlights() {
+        return flights;
     }
 
-    public void setPassengers(List<Flight> passengers) {
-        this.passengers = passengers;
+    public void setPassengers(List<Flight> flights) {
+        this.flights = flights;
     }*/
 
     public String getPassengerId() {
@@ -104,6 +103,8 @@ public class Passenger {
         this.reservations = reservations;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getPassengerJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("passengerId", this.getPassengerId());
@@ -115,6 +116,8 @@ public class Passenger {
         return jsonObject;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getWholePassengerDetailsJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("passenger", this.getPassengerJSON());

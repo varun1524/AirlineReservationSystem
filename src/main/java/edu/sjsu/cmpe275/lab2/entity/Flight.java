@@ -146,6 +146,8 @@ public class Flight {
         this.reservations = reservations;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getFlightJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("number", this.getFlightNumber());
@@ -160,6 +162,8 @@ public class Flight {
         return jsonObject;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getWholeFlightDetailsJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("flight", this.getFlightJSON());

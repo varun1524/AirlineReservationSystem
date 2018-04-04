@@ -1,6 +1,5 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -8,12 +7,9 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Set;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "planeId")
 @Entity
-//@Embeddable
 @Table(name = "plane")
 public class Plane {
 
@@ -74,6 +70,8 @@ public class Plane {
         this.year = year;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getPlaneJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("planeId", this.getPlaneId());

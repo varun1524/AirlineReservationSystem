@@ -22,7 +22,6 @@ public class Reservation {
 
     private double price; // sum of each flight’s price.
 
-//    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
@@ -64,6 +63,8 @@ public class Reservation {
         this.flights = flights;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getReservationJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("reservationNumber", this.getReservationNumber());
@@ -79,6 +80,8 @@ public class Reservation {
         return jsonObject;
     }
 
+    @Transient
+    @JsonIgnore
     public JSONObject getWholeReservationDetailsJSON(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("reservation", this.getReservationJSON());
