@@ -33,9 +33,7 @@ public class FlightService {
             Flight flight = flightRepository.findByFlightNumber(flightNumber);
             if(flight != null){
                 status = HttpStatus.OK;
-                jsonObject.put("flight", new JSONObject(flight));
-                jsonObject.getJSONObject("flight").remove("reservations");
-                System.out.println(jsonObject);
+                jsonObject = flight.getWholeFlightDetailsJSON();
                 if(responseType){
                     return new ResponseEntity(XML.toString(jsonObject), status);
                 }

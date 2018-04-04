@@ -35,8 +35,9 @@ public class PassengerService {
             Passenger passenger = passengerRepository.findByPassengerId(id);
             if(passenger!=null){
                 status = HttpStatus.OK;
-                jsonObject.put("passenger",new JSONObject(passenger));
-                pObj=passenger;
+                jsonObject = passenger.getWholePassengerDetailsJSON();
+//                jsonObject.put("passenger",new JSONObject(passenger));
+//                pObj=passenger;
                 System.out.println(jsonObject);
             }
             else {
