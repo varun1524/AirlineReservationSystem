@@ -1,6 +1,8 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -142,5 +144,32 @@ public class Flight {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public JSONObject getFlightJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("number", this.getFlightNumber());
+        jsonObject.put("price", this.getPrice());
+        jsonObject.put("from", this.getSource());
+        jsonObject.put("to", this.getDestination());
+        jsonObject.put("departureTime", this.getDepartureTime());
+        jsonObject.put("arrivalTime", this.getArrivalTime());
+        jsonObject.put("seatsLeft", this.getSeatsLeft());
+        jsonObject.put("description", this.getDescription());
+        jsonObject.put("plane", this.getPlane().getPlaneJSON());
+        return jsonObject;
+    }
+
+    public JSONObject getWholeFlightDetailsJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("flight", this.getFlightJSON());
+        JSONObject passengerJsonObject = new JSONObject();
+        jsonObject.getJSONObject("flight").put("passengers", passengerJsonObject);
+        JSONArray passengerJsonArray = new JSONArray();
+        this.getPassengers().forEach(passenger -> {
+            passengerJsonArray.put(passenger.getPassengerJSON());
+        });
+        passengerJsonObject.put("passenger",passengerJsonArray);
+        return jsonObject;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -71,6 +72,15 @@ public class Plane {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public JSONObject getPlaneJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("planeId", this.getPlaneId());
+        jsonObject.put("model", this.getModel());
+        jsonObject.put("manufacturer", this.getManufacturer());
+        jsonObject.put("year", this.getYear());
+        return jsonObject;
     }
 }
 

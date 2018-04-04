@@ -2,6 +2,9 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,12 +23,12 @@ public class Reservation {
     private double price; // sum of each flight’s price.
 
 //    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
 
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight_id", nullable = false)
     private List<Flight> flights;
 
@@ -59,5 +62,26 @@ public class Reservation {
 
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
+    }
+
+    public JSONObject getReservationJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("reservationNumber", this.getReservationNumber());
+        jsonObject.put("price", this.getPrice());
+        jsonObject.put("passenger",this.getPassenger().getPassengerJSON());
+        JSONObject jsonObjectFlights = new JSONObject();
+        jsonObject.put("flights", jsonObjectFlights);
+        JSONArray flightsJsonArray = new JSONArray();
+        this.getFlights().forEach(flight -> {
+            flightsJsonArray.put(flight.getFlightJSON());
+        });
+        jsonObjectFlights.put("flight",flightsJsonArray);
+        return jsonObject;
+    }
+
+    public JSONObject getWholeReservationDetailsJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("reservation", this.getReservationJSON());
+        return jsonObject;
     }
 }

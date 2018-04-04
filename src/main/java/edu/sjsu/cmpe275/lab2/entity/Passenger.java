@@ -2,6 +2,8 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.List;
@@ -100,5 +102,31 @@ public class Passenger {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public JSONObject getPassengerJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("passengerId", this.getPassengerId());
+        jsonObject.put("firstname", this.getFirstname());
+        jsonObject.put("lastname", this.getLastname());
+        jsonObject.put("age", this.getAge());
+        jsonObject.put("gender", this.getGender());
+        jsonObject.put("passengerId", this.getPhone());
+        return jsonObject;
+    }
+
+    public JSONObject getWholePassengerDetailsJSON(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("passenger", this.getPassengerJSON());
+        JSONObject jsonObjectReservation = new JSONObject();
+        jsonObject.getJSONObject("passenger").put("reservations", jsonObjectReservation);
+        JSONArray reservationJsonArray = new JSONArray();
+        this.getReservations().forEach(reservation -> {
+            JSONObject tempJSONObj = reservation.getReservationJSON();
+            tempJSONObj.remove("passenger");
+            reservationJsonArray.put(tempJSONObj);
+        });
+        jsonObjectReservation.put("reservation",reservationJsonArray);
+        return jsonObject;
     }
 }
