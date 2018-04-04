@@ -10,8 +10,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "planeId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "planeId")
 @Entity
+//@Embeddable
 @Table(name = "plane")
 public class Plane {
 
@@ -31,10 +32,6 @@ public class Plane {
 
     @NotNull
     private int year;
-
-    @JsonBackReference
-    @OneToMany(mappedBy="plane")
-    private List<Flight> flights;
 
     public int getPlaneId() {
         return planeId;
@@ -74,14 +71,6 @@ public class Plane {
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
     }
 }
 

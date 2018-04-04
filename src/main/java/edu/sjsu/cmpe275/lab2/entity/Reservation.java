@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
-
+import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,27 +12,28 @@ import java.util.List;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "reservation_number", nullable = false)
-    private int reservationNumber;
+    private String reservationNumber;
 
     private double price; // sum of each flight’s price.
 
 //    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
 
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "flight_id", nullable = false)
     private List<Flight> flights;
 
-    public int getReservationNumber() {
+    public String getReservationNumber() {
         return reservationNumber;
     }
 
-    public void setReservationNumber(int reservationNumber) {
+    public void setReservationNumber(String reservationNumber) {
         this.reservationNumber = reservationNumber;
     }
 

@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "flightNumber")
 @Entity
@@ -45,9 +44,7 @@ public class Flight {
 
     private String description;
 
-//    @JsonIgnore
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "plane_id", nullable = false)
     private Plane plane;  // Embedded
 
@@ -55,9 +52,9 @@ public class Flight {
     @ManyToMany(mappedBy = "flights")
     private List<Reservation> reservations;
 
-//    @OneToMany
-//    @JoinColumn(name = "passenger_id")
-//    private List<Passenger> passengers;
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    @JoinColumn(name = "passenger_id", nullable = false)
+    private List<Passenger> passengers;
 
     public String getFlightNumber() {
         return flightNumber;
@@ -131,11 +128,11 @@ public class Flight {
         this.plane = plane;
     }
 
-//    public List<Passenger> getPassengerList() {
-//        return passengers;
-//    }
-//
-//    public void setPassengerList(List<Passenger> passengers) {
-//        this.passengers = passengers;
-//    }
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
 }
