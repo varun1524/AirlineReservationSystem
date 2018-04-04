@@ -37,20 +37,6 @@ public class FlightController {
         return new ResponseEntity(flightList, HttpStatus.OK);
     }
 
-    /*@GetMapping(path = "/{flightNumber}", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity fetchFlight(@PathVariable(value = "flightNumber") String flightNumber){
-        ResponseEntity responseEntity = null;
-        HttpStatus status = null;
-        try{
-            System.out.println("flightNumber: " + flightNumber);
-            responseEntity = flightService.findByFlightNumber(flightNumber);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return responseEntity;
-    }*/
-
     @GetMapping(path = "/{flightNumber}")
     public ResponseEntity fetchFlight(@PathVariable(value = "flightNumber") String flightNumber,
                                       @RequestParam(value = "xml", required = false) String xml){
@@ -70,8 +56,6 @@ public class FlightController {
         }
         return responseEntity;
     }
-
-
 
     @PostMapping(path = "/{flightNumber}")
     public ResponseEntity createFlight(@PathVariable(value = "flightNumber") String flightNumber, @RequestParam Map<String, String> params){
