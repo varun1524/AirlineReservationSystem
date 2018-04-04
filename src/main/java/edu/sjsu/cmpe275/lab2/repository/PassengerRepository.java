@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
+public interface PassengerRepository extends JpaRepository<Passenger, String> {
 
-    Passenger findByPassengerId(int id);
+    Passenger findByPassengerId(String id);
 
     List<Passenger> findAll();
 }

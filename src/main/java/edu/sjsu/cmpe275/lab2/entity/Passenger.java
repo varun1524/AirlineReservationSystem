@@ -1,8 +1,7 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,10 +11,11 @@ import java.util.List;
 public class Passenger {
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "passenger_id", nullable = false)
-    private int passengerId;
+    private String passengerId;
 
     @Column(name = "first_name")
     private String firstname;
@@ -34,11 +34,23 @@ public class Passenger {
     @OneToMany(mappedBy="passenger")
     private List<Reservation> reservations;
 
-    public int getPassengerId() {
+    /*@JsonIgnore
+    @ManyToMany(mappedBy = "flights")
+    private List<Flight> passengers;
+
+    public List<Flight> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Flight> passengers) {
+        this.passengers = passengers;
+    }*/
+
+    public String getPassengerId() {
         return passengerId;
     }
 
-    public void setPassengerId(int passengerId) {
+    public void setPassengerId(String passengerId) {
         this.passengerId = passengerId;
     }
 
