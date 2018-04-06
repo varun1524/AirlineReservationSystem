@@ -112,7 +112,7 @@ public class Passenger {
         jsonObject.put("lastname", this.getLastname());
         jsonObject.put("age", this.getAge());
         jsonObject.put("gender", this.getGender());
-        jsonObject.put("passengerId", this.getPhone());
+        jsonObject.put("phone", this.getPhone());
         return jsonObject;
     }
 
