@@ -1,8 +1,6 @@
 package edu.sjsu.cmpe275.lab2.repository;
 
 import edu.sjsu.cmpe275.lab2.entity.Flight;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
