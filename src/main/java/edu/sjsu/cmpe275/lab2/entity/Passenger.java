@@ -35,7 +35,7 @@ public class Passenger {
     @OneToMany(mappedBy="passenger")
     private List<Reservation> reservations;
 
-    /*@JsonIgnore
+    @JsonIgnore
     @ManyToMany(mappedBy = "passengers")
     private List<Flight> flights;
 
@@ -45,7 +45,7 @@ public class Passenger {
 
     public void setPassengers(List<Flight> flights) {
         this.flights = flights;
-    }*/
+    }
 
     public String getPassengerId() {
         return passengerId;

@@ -31,11 +31,13 @@ public class Flight {
     */
 
     //    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "departure_time")
     @NotNull
     private Date departureTime;
 
     //  @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "arrival_time")
     @NotNull
     private Date arrivalTime;
@@ -54,7 +56,7 @@ public class Flight {
     @ManyToMany(mappedBy = "flights")
     private List<Reservation> reservations;
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "passenger_id", nullable = false)
     private List<Passenger> passengers;
 
@@ -150,7 +152,7 @@ public class Flight {
     @JsonIgnore
     public JSONObject getFlightJSON(){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("number", this.getFlightNumber());
+        jsonObject.put("flightNumber", this.getFlightNumber());
         jsonObject.put("price", this.getPrice());
         jsonObject.put("from", this.getSource());
         jsonObject.put("to", this.getDestination());
