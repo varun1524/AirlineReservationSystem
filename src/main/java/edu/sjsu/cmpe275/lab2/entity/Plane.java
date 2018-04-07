@@ -2,7 +2,11 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import edu.sjsu.cmpe275.lab2.view.FlightView;
+import edu.sjsu.cmpe275.lab2.view.PassengerView;
+import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -13,20 +17,25 @@ import javax.validation.constraints.NotNull;
 @Table(name = "plane")
 public class Plane {
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "plane_id", nullable = false)
     private int planeId;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
     private int capacity;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
     private String model;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
     private String manufacturer;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
     private int year;
 

@@ -27,6 +27,7 @@ public class FlightService {
     }
 
     public ResponseEntity findByFlightNumber(String flightNumber, boolean responseType){
+        ResponseEntity responseEntity = null;
         HttpStatus status = null;
         JSONObject jsonObject = new JSONObject();
         Flight flight = null;
@@ -36,10 +37,11 @@ public class FlightService {
                 status = HttpStatus.OK;
                 jsonObject = flight.getWholeFlightDetailsJSON();
                 if(responseType){
-                    return new ResponseEntity(XML.toString(jsonObject), status);
+                    responseEntity = new ResponseEntity(XML.toString(jsonObject), status);
                 }
                 else {
-                    return new ResponseEntity(jsonObject.toString(), status);
+//                    responseEntity = new ResponseEntity(jsonObject.toString(), status);
+                    responseEntity = new ResponseEntity(flight, status);
                 }
             }
             else {
@@ -52,7 +54,7 @@ public class FlightService {
         catch (Exception e){
             e.printStackTrace();
         }
-        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        return responseEntity;
     }
 
     public ResponseEntity addOrUpdateFlight(String flightNumber, Map<String, String> params){

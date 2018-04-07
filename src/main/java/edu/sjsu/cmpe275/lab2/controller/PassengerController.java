@@ -1,7 +1,9 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.service.PassengerService;
+import edu.sjsu.cmpe275.lab2.view.PassengerView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ public class PassengerController {
     }
 
     // API 1&2
+    @JsonView({PassengerView.summary.class})
     @GetMapping(path = "/{id}")
     public ResponseEntity displayPassenger(@PathVariable("id") String id, Map<String,String> map){
         return passengerService.findByPassengerId(id);

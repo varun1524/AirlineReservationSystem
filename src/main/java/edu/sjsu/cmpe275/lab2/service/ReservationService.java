@@ -43,7 +43,8 @@ public class ReservationService {
         try{
             reservation = reservationRepository.findByReservationNumber(reservationNumber);
             if(reservation!=null){
-                responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
+//                responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
+                responseEntity = new ResponseEntity<>(reservation, HttpStatus.OK);
             }
             else {
                 JSONObject jsonObject = new JSONObject();
@@ -58,7 +59,6 @@ public class ReservationService {
             e.printStackTrace();
         }
         return responseEntity;
-//        return new ResponseEntity(reservation, HttpStatus.OK);
     }
 
 

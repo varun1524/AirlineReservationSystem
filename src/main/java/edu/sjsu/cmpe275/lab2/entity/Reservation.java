@@ -1,6 +1,9 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import edu.sjsu.cmpe275.lab2.view.FlightView;
+import edu.sjsu.cmpe275.lab2.view.PassengerView;
+import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.hibernate.annotations.GenericGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +11,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.List;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reservationNumber")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reservationNumber")
 //@JsonIgnoreProperties(allowSetters = true, value = { "passenger" })
 @Entity
 @Table(name = "reservation")
@@ -18,15 +21,19 @@ public class Reservation {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "reservation_number", nullable = false)
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class})
     private String reservationNumber;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class})
     private double price; // sum of each flight’s price.
 
+    @JsonView({ReservationView.summary.class})
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
 
-    @JsonManagedReference
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class})
+//    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight_id", nullable = false)
     private List<Flight> flights;

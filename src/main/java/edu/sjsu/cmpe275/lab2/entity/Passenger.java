@@ -1,6 +1,9 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import edu.sjsu.cmpe275.lab2.view.FlightView;
+import edu.sjsu.cmpe275.lab2.view.PassengerView;
+import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.hibernate.annotations.GenericGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,28 +16,36 @@ import java.util.List;
 public class Passenger {
 
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "passenger_id", nullable = false)
     private String passengerId;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Column(name = "first_name")
     private String firstname;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Column(name = "last_name")
     private String lastname;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private int age;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String gender;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Column(unique = true)
     private String phone; // Phone numbers must be unique
 
+    @JsonView({PassengerView.summary.class})
     @OneToMany(mappedBy="passenger")
     private List<Reservation> reservations;
 
+//    @JsonView({PassengerView.summary.class})
     @JsonIgnore
     @ManyToMany(mappedBy = "passengers")
     private List<Flight> flights;

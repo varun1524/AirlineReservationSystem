@@ -1,6 +1,8 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import edu.sjsu.cmpe275.lab2.service.ReservationService;
+import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ public class ReservationController {
         return responseEntity;
     }
 
+    @JsonView({ReservationView.summary.class})
     @GetMapping(path = "/{reservationNumber}")
     public ResponseEntity fetchReservationById(@PathVariable String reservationNumber){
         ResponseEntity responseEntity = null;

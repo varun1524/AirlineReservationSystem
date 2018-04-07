@@ -1,6 +1,9 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import edu.sjsu.cmpe275.lab2.view.FlightView;
+import edu.sjsu.cmpe275.lab2.view.PassengerView;
+import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,14 +17,18 @@ import java.util.List;
 @Table(name = "flight")
 public class Flight {
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Id
     @Column(name = "flight_number", nullable = false)
     private String flightNumber; // Each flight has a unique flight number.
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private double price;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String source;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String destination;
 
     /*
@@ -31,31 +38,38 @@ public class Flight {
     */
 
     //    @Temporal(TemporalType.TIMESTAMP)
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "departure_time")
     @NotNull
     private Date departureTime;
 
     //  @Temporal(TemporalType.TIMESTAMP)
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "arrival_time")
     @NotNull
     private Date arrivalTime;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Column(name = "seatsLeft")
     @NotNull
     private int seatsLeft;
 
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String description;
 
+
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "plane_id", nullable = false)
     private Plane plane;  // Embedded
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToMany(mappedBy = "flights")
     private List<Reservation> reservations;
 
+    @JsonView({FlightView.summary.class})
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "passenger_id", nullable = false)
     private List<Passenger> passengers;

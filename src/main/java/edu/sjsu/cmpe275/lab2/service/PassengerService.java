@@ -44,8 +44,8 @@ public class PassengerService {
             e.printStackTrace();
         }
 
-        return new ResponseEntity(jsonObject.toString(),status);
-//        return new ResponseEntity(passenger, status);
+//        return new ResponseEntity(jsonObject.toString(),status);
+        return new ResponseEntity(passenger, status);
     }
 
     public List<Passenger> findAllPassengers(){
