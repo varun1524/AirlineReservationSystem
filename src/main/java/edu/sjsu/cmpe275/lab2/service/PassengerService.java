@@ -21,24 +21,17 @@ public class PassengerService {
     public Passenger save(Passenger passenger){
         return passengerRepository.save(passenger);
     }
-//
-//    public Passenger findByPassengerId(String id){
-//        return passengerRepository.findByPassengerId(id);
-//    }
 
     public ResponseEntity findByPassengerId(String id){
         Passenger pObj= null;
         HttpStatus status = null;
-
+        Passenger passenger = null;
         JSONObject jsonObject = new JSONObject();
         try{
-            Passenger passenger = passengerRepository.findByPassengerId(id);
+            passenger = passengerRepository.findByPassengerId(id);
             if(passenger!=null){
                 status = HttpStatus.OK;
                 jsonObject = passenger.getWholePassengerDetailsJSON();
-//                jsonObject.put("passenger",new JSONObject(passenger));
-//                pObj=passenger;
-                System.out.println(jsonObject);
             }
             else {
                 JSONObject jsonObject1 = new JSONObject();
@@ -48,10 +41,11 @@ public class PassengerService {
             }
         }
         catch(Exception e){
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
         return new ResponseEntity(jsonObject.toString(),status);
+//        return new ResponseEntity(passenger, status);
     }
 
     public List<Passenger> findAllPassengers(){
