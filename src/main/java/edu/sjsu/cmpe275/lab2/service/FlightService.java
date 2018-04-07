@@ -29,8 +29,9 @@ public class FlightService {
     public ResponseEntity findByFlightNumber(String flightNumber, boolean responseType){
         HttpStatus status = null;
         JSONObject jsonObject = new JSONObject();
+        Flight flight = null;
         try {
-            Flight flight = flightRepository.findByFlightNumber(flightNumber);
+            flight = flightRepository.findByFlightNumber(flightNumber);
             if(flight != null){
                 status = HttpStatus.OK;
                 jsonObject = flight.getWholeFlightDetailsJSON();
