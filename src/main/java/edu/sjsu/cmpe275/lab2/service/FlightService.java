@@ -4,7 +4,6 @@ import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.entity.Plane;
 import edu.sjsu.cmpe275.lab2.repository.FlightRepository;
-import org.json.HTTP;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Response;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -64,9 +62,7 @@ public class FlightService {
             Flight flight = flightRepository.findByFlightNumber(flightNumber);
 
             Flight receivedFlight = new Flight();
-
             Plane p = new Plane();
-
             p.setModel(params.get("model"));
             p.setCapacity(Integer.parseInt(params.get("capacity")));
             p.setYear(Integer.parseInt(params.get("year")));
@@ -87,23 +83,7 @@ public class FlightService {
             }
 
             if (flight == null) {
-//                flight = new Flight();
-
-//                flight.setPlane(p);
-//                flight.setFlightNumber(flightNumber);
-//                flight.setSource(params.get(receivedFlight.getSource()));
-//                flight.setDestination(receivedFlight.getDestination());
-//                flight.setSeatsLeft(p.getCapacity());
-//                flight.setPrice(receivedFlight.getPrice());
-//                flight.setDescription(receivedFlight.getDescription());
-//                flight.setDepartureTime(receivedFlight.getDepartureTime());
-//                flight.setArrivalTime(receivedFlight.getArrivalTime());
-
-
-//                flight.setPlane(p);
-
                 Flight flightObj = flightRepository.save(receivedFlight);
-
                 if(flightObj!=null){
                     responseEntity = new ResponseEntity(flightObj, HttpStatus.OK);
                 }
@@ -114,26 +94,7 @@ public class FlightService {
             else {
                 if((flight.getPlane().getCapacity()-flight.getSeatsLeft()) < p.getCapacity()) {
                     if(isFlightUpdatable(flight)) {
-
-                        Plane plane = flight.getPlane();
-//
-                        plane.setManufacturer(p.getManufacturer());
-                        plane.setYear(p.getYear());
-                        plane.setCapacity(p.getCapacity());
-                        plane.setModel(p.getModel());
-
-                        flight.setPlane(plane);
-                        flight.setFlightNumber(flightNumber);
-                        flight.setSource(receivedFlight.getSource());
-                        flight.setDestination(receivedFlight.getDestination());
-                        flight.setSeatsLeft(plane.getCapacity() - flight.getPassengers().size());
-                        flight.setPrice(receivedFlight.getPrice());
-                        flight.setDescription(receivedFlight.getDescription());
-                        flight.setDepartureTime(receivedFlight.getDepartureTime());
-                        flight.setArrivalTime(receivedFlight.getArrivalTime());
-
-                        flight = flightRepository.save(flight);
-
+                        flight = flightRepository.save(receivedFlight);
                         responseEntity = new ResponseEntity(flight, HttpStatus.OK);
                     }
                     else {
