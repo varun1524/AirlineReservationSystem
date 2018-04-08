@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "bfdfbed9-60e2-462a-9a5a-eb2c26513136",
+		"name": "275Lab2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Passenger by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					]
+				},
+				"description": "fetch passenger by id"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Passenger by ID XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1?xml=true  ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					],
+					"query": [
+						{
+							"key": "xml",
+							"value": "true  "
+						}
+					]
+				},
+				"description": "fetch passenger by id as XML"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Passenger",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger?firstname=jinal&lastname=shah&age=23&gender=male&phone=9172343232",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "jinal"
+						},
+						{
+							"key": "lastname",
+							"value": "shah"
+						},
+						{
+							"key": "age",
+							"value": "23"
+						},
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "phone",
+							"value": "9172343232"
+						}
+					]
+				},
+				"description": "Creates create Passenger"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Passenger",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger/7beb921f-a000-4e6e-871e-00a44185f389?firstname=ashna&lastname=shah&age=25&gender=female&phone=4352343232",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger",
+						"7beb921f-a000-4e6e-871e-00a44185f389"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "ashna"
+						},
+						{
+							"key": "lastname",
+							"value": "shah"
+						},
+						{
+							"key": "age",
+							"value": "25"
+						},
+						{
+							"key": "gender",
+							"value": "female"
+						},
+						{
+							"key": "phone",
+							"value": "4352343232"
+						}
+					]
+				},
+				"description": "Update Passenger"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Passenger by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					]
+				},
+				"description": "Delete passenger by id"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Reservation by ReservationID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/reservation/60c0912d-4298-4cfc-a95f-a54768d687ba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"60c0912d-4298-4cfc-a95f-a54768d687ba"
+					]
+				},
+				"description": "Fetch Reservation by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Make Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/reservation?passengerId=9357d248-8b52-48f9-a5ae-f574282d22f4&flightLists=126",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation"
+					],
+					"query": [
+						{
+							"key": "passengerId",
+							"value": "9357d248-8b52-48f9-a5ae-f574282d22f4"
+						},
+						{
+							"key": "flightLists",
+							"value": "126"
+						}
+					]
+				},
+				"description": "Create Reservation by passenger id and flight numbers"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/reservation/reservationNumber?flightsAdded=AA,BB,CC&flightsRemoved=XX,YY",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"reservationNumber"
+					],
+					"query": [
+						{
+							"key": "flightsAdded",
+							"value": "AA,BB,CC"
+						},
+						{
+							"key": "flightsRemoved",
+							"value": "XX,YY"
+						}
+					]
+				},
+				"description": "Update Reservation by passenger id and flight numbers"
+			},
+			"response": []
+		},
+		{
+			"name": "Search for Reservation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/reservation?passengerId=7beb921f-a000-4e6e-871e-00a44185f389&origin=San Jose&to=Houston&flightNumber=123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation"
+					],
+					"query": [
+						{
+							"key": "passengerId",
+							"value": "7beb921f-a000-4e6e-871e-00a44185f389"
+						},
+						{
+							"key": "origin",
+							"value": "San Jose"
+						},
+						{
+							"key": "to",
+							"value": "Houston"
+						},
+						{
+							"key": "flightNumber",
+							"value": "123"
+						}
+					]
+				},
+				"description": "Search for reservation"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					]
+				},
+				"description": "cancel reservation "
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Flight by FlightNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/flight/124",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"124"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Flight by FlightNumber as XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/flight/125?xml=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"125"
+					],
+					"query": [
+						{
+							"key": "xml",
+							"value": "true"
+						}
+					]
+				},
+				"description": "fetch flight in XML"
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Flight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/flight/126?price=150&from=Houston&to=San%20Jose&departureTime=2018-05-16-13&arrivalTime=2018-05-16-17&description=Direct%20flight&capacity=50&model=Boeing%20747&manufacturer=airbus&year=1993",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"126"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "150"
+						},
+						{
+							"key": "from",
+							"value": "Houston"
+						},
+						{
+							"key": "to",
+							"value": "San%20Jose"
+						},
+						{
+							"key": "departureTime",
+							"value": "2018-05-16-13"
+						},
+						{
+							"key": "arrivalTime",
+							"value": "2018-05-16-17"
+						},
+						{
+							"key": "description",
+							"value": "Direct%20flight"
+						},
+						{
+							"key": "capacity",
+							"value": "50"
+						},
+						{
+							"key": "model",
+							"value": "Boeing%20747"
+						},
+						{
+							"key": "manufacturer",
+							"value": "airbus"
+						},
+						{
+							"key": "year",
+							"value": "1993"
+						}
+					]
+				},
+				"description": "Creates Flight"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Flight",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://localhost:8080/flight/124",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flight",
+						"124"
+					]
+				},
+				"description": "Delete Flight by ID"
+			},
+			"response": []
+		}
+	]
+}
