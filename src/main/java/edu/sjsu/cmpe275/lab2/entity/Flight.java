@@ -61,16 +61,18 @@ public class Flight {
 
 
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "plane_id", nullable = false)
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "plane_id", nullable = false)
+    @Embedded
     private Plane plane;  // Embedded
 
 //    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(mappedBy = "flights")
     private List<Reservation> reservations;
 
     @JsonView({FlightView.summary.class})
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "passenger_id", nullable = false)
     private List<Passenger> passengers;
 

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.List;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "passengerId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "passengerId")
 @Entity
 public class Passenger {
 
