@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.service.FlightService;
@@ -60,6 +61,7 @@ public class FlightController {
         return responseEntity;
     }
 
+    @JsonView({FlightView.summary.class})
     @PostMapping(path = "/{flightNumber}")
     public ResponseEntity createFlight(@PathVariable(value = "flightNumber") String flightNumber, @RequestParam Map<String, String> params){
         ResponseEntity entity = null;
