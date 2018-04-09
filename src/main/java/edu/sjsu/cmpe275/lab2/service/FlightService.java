@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -45,7 +46,7 @@ public class FlightService {
                 }
             }
             else {
-                responseEntity = new ResponseEntity(responseService.getErrorJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
+                responseEntity = new ResponseEntity(responseService.getJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
             }
         }
         catch (Exception e){
@@ -88,7 +89,7 @@ public class FlightService {
                     responseEntity = new ResponseEntity(flightObj, HttpStatus.OK);
                 }
                 else {
-                    responseEntity = new ResponseEntity(responseService.getErrorJSONResponse("Error while creating Flight", HttpStatus.NOT_FOUND, "Bad Request") ,HttpStatus.NOT_FOUND);
+                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Error while creating Flight", HttpStatus.NOT_FOUND, "Bad Request") ,HttpStatus.NOT_FOUND);
                 }
             }
             else {
@@ -98,11 +99,11 @@ public class FlightService {
                         responseEntity = new ResponseEntity(flight, HttpStatus.OK);
                     }
                     else {
-                        responseEntity = new ResponseEntity(responseService.getErrorJSONResponse("Flight time operlaps with passenger's ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
+                        responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight time operlaps with passenger's ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
                     }
                 }
                 else {
-                    responseEntity = new ResponseEntity(responseService.getErrorJSONResponse("Flight capacity less than already booked tickets ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
+                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight capacity less than already booked tickets ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
                 }
             }
         }
@@ -134,51 +135,33 @@ public class FlightService {
         return result;
     }
 
+    @Transactional
     public ResponseEntity deleteFlight(String flightNumber){
-        HttpStatus status = null;
-        JSONObject jsonObject = new JSONObject();
+        ResponseEntity responseEntity = null;
         try{
             Flight flight = flightRepository.findByFlightNumber(flightNumber);
             if(flight!=null){
                 if(flight.getReservations().size()==0){
                     if(flightRepository.deleteFlightByFlightNumber(flightNumber)==1){
                         System.out.println("Flight Deleted Successfully");
-                        status = HttpStatus.OK;
-                        JSONObject jsonObject1 = new JSONObject();
-                        jsonObject1.put("msg", "Flight with number "+ flightNumber +" is deleted successfully");
-                        jsonObject1.put("code", status);
-                        jsonObject.put("response",jsonObject1);
+                        responseEntity = new ResponseEntity(responseService.getXMLResponse("Flight with number "+ flightNumber +" is deleted successfully", HttpStatus.OK, "Response"), HttpStatus.OK);
                     }
                     else {
                         System.out.println("Failed to delete flight");
-                        status = HttpStatus.NOT_FOUND;
-                        JSONObject jsonObject1 = new JSONObject();
-                        jsonObject1.put("msg", "Failed to delete Flight with number "+ flightNumber);
-                        jsonObject1.put("code", status);
-                        jsonObject.put("Bad Request",jsonObject1);
+                        responseEntity = new ResponseEntity(responseService.getJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
                     }
                 }
                 else {
-                    System.out.println("Reservation is made on flight. So it cannot be deleted");
-                    status = HttpStatus.NOT_FOUND;
-                    JSONObject jsonObject1 = new JSONObject();
-                    jsonObject1.put("msg", "Failed to delete Flight with number "+ flightNumber + "because Reservation is made on flight. So it cannot be deleted");
-                    jsonObject1.put("code", status);
-                    jsonObject.put("Not Found",jsonObject1);
+                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Reservation is made on flight. So it cannot be deleted", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
                 }
             }
             else {
-                status = HttpStatus.BAD_REQUEST;
-                JSONObject jsonObject1 = new JSONObject();
-                jsonObject1.put("msg", "Failed to delete Flight with number "+ flightNumber);
-                jsonObject1.put("code", status);
-                jsonObject.put("Bad Request",jsonObject1);
+                responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight does not exist with flightNumber: "+ flightNumber, HttpStatus.BAD_REQUEST, "Bad_Request"), HttpStatus.BAD_REQUEST);
             }
         }
         catch (Exception e){
             e.printStackTrace();
-            status = HttpStatus.NOT_FOUND;
         }
-        return new ResponseEntity(XML.toString(jsonObject.toString()), status);
+        return responseEntity;
     }
 }
