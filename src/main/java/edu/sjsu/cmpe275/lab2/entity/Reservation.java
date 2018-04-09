@@ -28,15 +28,17 @@ public class Reservation {
     private double price; // sum of each flight’s price.
 
     @JsonView({ReservationView.summary.class})
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
 
     @JsonView({PassengerView.summary.class, ReservationView.summary.class})
 //    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "flight_id", nullable = false)
     private List<Flight> flights;
+
+    public Reservation(){}
 
     public String getReservationNumber() {
         return reservationNumber;

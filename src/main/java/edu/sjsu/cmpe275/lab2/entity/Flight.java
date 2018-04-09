@@ -72,9 +72,16 @@ public class Flight {
     private List<Reservation> reservations;
 
     @JsonView({FlightView.summary.class})
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "passenger_id", nullable = false)
     private List<Passenger> passengers;
+
+    public Flight(){}
+
+    public Flight(String flightNumber){
+        this.flightNumber = flightNumber;
+    }
+
 
     public String getFlightNumber() {
         return flightNumber;

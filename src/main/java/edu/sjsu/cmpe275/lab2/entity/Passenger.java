@@ -50,11 +50,13 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private List<Flight> flights;
 
+    public Passenger(){}
+
     public List<Flight> getFlights() {
         return flights;
     }
 
-    public void setPassengers(List<Flight> flights) {
+    public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
 
