@@ -1,6 +1,5 @@
 package edu.sjsu.cmpe275.lab2.service;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.entity.Reservation;
@@ -8,14 +7,12 @@ import edu.sjsu.cmpe275.lab2.repository.FlightRepository;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import edu.sjsu.cmpe275.lab2.repository.ReservationRepository;
 import org.json.JSONObject;
-import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +50,7 @@ public class ReservationService {
                 responseEntity = new ResponseEntity<>(reservation, HttpStatus.OK);
             }
             else {
-                responseEntity = new ResponseEntity<>(responseService.getErrorJSONResponse("No Reservation record exist with reservation number: "+ reservationNumber, HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
+                responseEntity = new ResponseEntity<>(responseService.getJSONResponse("No Reservation record exist with reservation number: "+ reservationNumber, HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
             }
         }
         catch (Exception e){
@@ -62,12 +59,12 @@ public class ReservationService {
         return responseEntity;
     }
 
-    public ResponseEntity makeReservation(Map<String, String> params) throws Exception{
-        ResponseEntity responseEntity = null;
+    public ResponseEntity<String> makeReservation(Map<String, String> params) throws Exception{
+        ResponseEntity<String> responseEntity = null;
         HttpStatus status = HttpStatus.NOT_FOUND;
         Reservation reservation = null;
         JSONObject jsonObject = null;
-        String errorJSONResponse = responseService.getErrorJSONResponse("Failed to make reservation for Flight", HttpStatus.NOT_FOUND, "Bad Request");
+        String errorJSONResponse = responseService.getJSONResponse("Failed to make reservation for Flight", HttpStatus.NOT_FOUND, "Bad Request");
         try{
             params.entrySet().forEach(stringStringEntry -> {
                 System.out.println(stringStringEntry.getKey() + "  :  " + stringStringEntry.getValue());
@@ -115,21 +112,21 @@ public class ReservationService {
                     if(checkInterBetweenOverLapping(newFlightForReservation)) {
                         reservation = createReservationEntry(newFlightForReservation, passenger);
                         if(reservation!=null){
-//                            responseEntity = new ResponseEntity(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
-                            responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
+                            responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
+//                            responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
 
                         }
                         else {
-                            responseEntity = new ResponseEntity(errorJSONResponse, HttpStatus.NOT_FOUND);
+                            responseEntity = new ResponseEntity<>(errorJSONResponse, HttpStatus.NOT_FOUND);
                         }
                     }
                 }
                 else {
-                    responseEntity = new ResponseEntity(errorJSONResponse, HttpStatus.NOT_FOUND);
+                    responseEntity = new ResponseEntity<>(errorJSONResponse, HttpStatus.NOT_FOUND);
                 }
             }
             else{
-                responseEntity = new ResponseEntity(errorJSONResponse, HttpStatus.NOT_FOUND);
+                responseEntity = new ResponseEntity<>(errorJSONResponse, HttpStatus.NOT_FOUND);
             }
         }
         catch (Exception e){
@@ -206,7 +203,7 @@ public class ReservationService {
 
             Reservation reservation = null;
 
-            responseEntity = new ResponseEntity(responseService.getErrorJSONResponse("No Reservations available for given input", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity(responseService.getJSONResponse("No Reservations available for given input", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
 
             //region <Passenger Id Exists>
             if(passengerId!=null){
@@ -298,6 +295,38 @@ public class ReservationService {
                 }
             }
             //endregion
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseEntity;
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public ResponseEntity<String> cancelReservation(String reservationNumber){
+        ResponseEntity<String> responseEntity = null;
+        try{
+            Reservation reservation = reservationRepository.findByReservationNumber(reservationNumber);
+            if(reservation!=null){
+                for(Flight flight : reservation.getFlights()){
+                    if(flight.getPassengers().remove(reservation.getPassenger())){
+                        flight.setSeatsLeft(flight.getSeatsLeft()+1);
+                    }
+                    else {
+                        throw new Exception("Error. Roll Back");
+                    }
+                }
+                if(reservationRepository.deleteReservationByReservationNumber(reservationNumber)==1){
+                    responseEntity = new ResponseEntity<>(responseService.getXMLResponse(
+                            "Reservation Cancelled for reservation number: " +
+                                    reservationNumber, HttpStatus.OK, "Response"), HttpStatus.OK);
+                }
+            }
+            else {
+                responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
+                        "Reservation does not exist with reservation number: "+ reservationNumber,
+                        HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
+            }
         }
         catch (Exception e){
             e.printStackTrace();
