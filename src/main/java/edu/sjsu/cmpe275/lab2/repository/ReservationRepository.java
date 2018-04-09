@@ -19,4 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
 
     List<Reservation> findAllByFlights(Flight flight);
 
+    int deleteReservationByReservationNumber(String reservationNUmber);
+
 }

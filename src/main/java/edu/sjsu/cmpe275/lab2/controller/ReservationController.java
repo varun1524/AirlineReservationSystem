@@ -53,4 +53,16 @@ public class ReservationController {
         }
         return responseEntity;
     }
+
+    @DeleteMapping(path = "/{reservationNumber}")
+    public ResponseEntity deletePassenger(@PathVariable("reservationNumber") String reservationNumber){
+        ResponseEntity responseEntity = null;
+        try{
+            responseEntity = reservationService.cancelReservation(reservationNumber);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseEntity;
+    }
 }
