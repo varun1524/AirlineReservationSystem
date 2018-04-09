@@ -3,12 +3,15 @@ package edu.sjsu.cmpe275.lab2.service;
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.entity.Reservation;
+import edu.sjsu.cmpe275.lab2.repository.FlightRepository;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
+import edu.sjsu.cmpe275.lab2.repository.ReservationRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,15 @@ import java.util.Map;
 public class PassengerService {
     @Autowired
     PassengerRepository passengerRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
+    @Autowired
+    FlightRepository flightRepository;
+
+    @Autowired
+    ResponseService responseService;
 
     public PassengerService(){
         super();
@@ -30,7 +42,7 @@ public class PassengerService {
         return passengerRepository.save(passenger);
     }
 
-    public ResponseEntity findByPassengerId(String id){
+    public ResponseEntity<String> findByPassengerId(String id){
         Passenger pObj= null;
         HttpStatus status = null;
         Passenger passenger = null;
@@ -53,7 +65,7 @@ public class PassengerService {
             e.printStackTrace();
         }
 
-        return new ResponseEntity(jsonObject.toString(),status);
+        return new ResponseEntity<>(jsonObject.toString(),status);
 //        return new ResponseEntity(passenger, status);
     }
 
@@ -84,30 +96,43 @@ public class PassengerService {
         return save(passenger);
     }
 
-    public ResponseEntity deletePassenger(String id){
-        //passengerRepository.deletePassengerByPassengerId(id);
+    @Transactional(rollbackFor = {Exception.class})
+    public ResponseEntity<String> deletePassenger(String id) throws Exception{
         String msg="";
+        ResponseEntity<String> responseEntity = null;
         Passenger passenger = passengerRepository.findByPassengerId(id);
         if(passenger==null){
             //msg = "Passenger "+id+" not found";
-            JSONObject jsonObject = new JSONObject();
-            JSONObject jsonObject1 = new JSONObject();
-            jsonObject1.put("msg", "Failed to delete Passenger with ID "+ id);
-            jsonObject1.put("code", HttpStatus.NOT_FOUND);
-            jsonObject.put("Bad Request",jsonObject1);
-            return new ResponseEntity(jsonObject,HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
+                    "Failed to delete Passenger with ID "+ id, HttpStatus.BAD_REQUEST, "Bad Request"),
+                    HttpStatus.BAD_REQUEST);
         }
         else{
-            List<Reservation> reservations = passenger.getReservations();
-            for(Reservation reservation : reservations){
-                for(Flight flight : reservation.getFlights()){
-                    flight.setSeatsLeft(flight.getSeatsLeft()+1);
+            List<Flight> flightList = passenger.getFlights();
+            List<Reservation> reservationList = passenger.getReservations();
+            for(Flight flight : flightList){
+                if(!flight.getPassengers().remove(passenger)){
+                    throw new Exception("Error. Roll Back");
+                }
+                else {
+//                    flightRepository.save(flight);
                 }
             }
-            passengerRepository.deletePassengerByPassengerId(id);
-            return new ResponseEntity(msg,HttpStatus.OK);
+            for(Reservation reservation : reservationList){
+                if(reservationRepository.deleteReservationByReservationNumber(reservation.getReservationNumber())!=1){
+                    throw new Exception("Error. Roll Back");
+                }
+            }
+            System.out.println(passenger);
+            if(passengerRepository.deletePassengerByPassengerId(passenger.getPassengerId())==1){
+                System.out.println("Deleted Passenger");
+                responseEntity = new ResponseEntity<>(responseService.getXMLResponse("Passenger with ID "+ id + " removed", HttpStatus.OK, "Response" ), HttpStatus.OK);
+            }
+            else {
+                throw new Exception("Error. Roll Back");
+            }
         }
-
+        return responseEntity;
     }
 
 

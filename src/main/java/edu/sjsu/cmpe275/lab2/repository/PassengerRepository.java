@@ -15,5 +15,5 @@ public interface PassengerRepository extends JpaRepository<Passenger, String> {
     List<Passenger> findAll();
 
     @Transactional
-    void deletePassengerByPassengerId(String id);
+    int deletePassengerByPassengerId(String id);
 }

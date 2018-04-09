@@ -46,7 +46,14 @@ public class PassengerController {
 
     //Delete passenger. API 5
     @DeleteMapping(path = "/{id}")
-    public void deletePassenger(@PathVariable("id") String id){
-        passengerService.deletePassenger(id);
+    public ResponseEntity deletePassenger(@PathVariable("id") String id){
+        ResponseEntity responseEntity = null;
+        try{
+            responseEntity = passengerService.deletePassenger(id);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseEntity;
     }
 }
