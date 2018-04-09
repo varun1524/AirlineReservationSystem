@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
 @RestController
 @RequestMapping(path = "/reservation")
 public class ReservationController {
@@ -22,6 +21,19 @@ public class ReservationController {
         ResponseEntity responseEntity = null;
         try{
             responseEntity = reservationService.makeReservation(params);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseEntity;
+    }
+
+    @JsonView({ReservationView.summary.class})
+    @GetMapping
+    public ResponseEntity searchForReservation(@RequestParam Map<String, String> params){
+        ResponseEntity responseEntity = null;
+        try{
+            responseEntity = reservationService.searchForReservation(params);
         }
         catch (Exception e){
             e.printStackTrace();
