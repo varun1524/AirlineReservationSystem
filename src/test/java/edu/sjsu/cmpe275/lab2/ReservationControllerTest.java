@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe275.lab2.controller;
+package edu.sjsu.cmpe275.lab2;
 
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import edu.sjsu.cmpe275.lab2.repository.ReservationRepository;
