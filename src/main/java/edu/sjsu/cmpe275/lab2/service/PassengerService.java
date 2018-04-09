@@ -1,15 +1,15 @@
 package edu.sjsu.cmpe275.lab2.service;
 
+import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
+import edu.sjsu.cmpe275.lab2.entity.Reservation;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +17,14 @@ import java.util.Map;
 public class PassengerService {
     @Autowired
     PassengerRepository passengerRepository;
+
+    public PassengerService(){
+        super();
+    }
+
+    public PassengerService(PassengerRepository passengerRepository){
+        this.passengerRepository =  passengerRepository;
+    }
 
     public Passenger save(Passenger passenger){
         return passengerRepository.save(passenger);
@@ -38,14 +46,15 @@ public class PassengerService {
                 jsonObject1.put("msg", "Failed to delete Passenger with ID "+ id);
                 jsonObject1.put("code", status);
                 jsonObject.put("Bad Request",jsonObject1);
+
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
 
-//        return new ResponseEntity(jsonObject.toString(),status);
-        return new ResponseEntity(passenger, status);
+        return new ResponseEntity(jsonObject.toString(),status);
+//        return new ResponseEntity(passenger, status);
     }
 
     public List<Passenger> findAllPassengers(){
@@ -75,8 +84,30 @@ public class PassengerService {
         return save(passenger);
     }
 
-    public void deletePassenger(String id){
-        passengerRepository.deletePassengerByPassengerId(id);
+    public ResponseEntity deletePassenger(String id){
+        //passengerRepository.deletePassengerByPassengerId(id);
+        String msg="";
+        Passenger passenger = passengerRepository.findByPassengerId(id);
+        if(passenger==null){
+            //msg = "Passenger "+id+" not found";
+            JSONObject jsonObject = new JSONObject();
+            JSONObject jsonObject1 = new JSONObject();
+            jsonObject1.put("msg", "Failed to delete Passenger with ID "+ id);
+            jsonObject1.put("code", HttpStatus.NOT_FOUND);
+            jsonObject.put("Bad Request",jsonObject1);
+            return new ResponseEntity(jsonObject,HttpStatus.NOT_FOUND);
+        }
+        else{
+            List<Reservation> reservations = passenger.getReservations();
+            for(Reservation reservation : reservations){
+                for(Flight flight : reservation.getFlights()){
+                    flight.setSeatsLeft(flight.getSeatsLeft()+1);
+                }
+            }
+            passengerRepository.deletePassengerByPassengerId(id);
+            return new ResponseEntity(msg,HttpStatus.OK);
+        }
+
     }
 
 
