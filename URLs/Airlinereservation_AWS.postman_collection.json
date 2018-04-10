@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "bfdfbed9-60e2-462a-9a5a-eb2c26513136",
+		"name": "275Lab2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Passenger by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					]
+				},
+				"description": "fetch passenger by id"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Passenger by ID XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/passenger/e8ee61e5-c567-48e2-b898-2791e27a37b1?xml=true  ",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"passenger",
+						"e8ee61e5-c567-48e2-b898-2791e27a37b1"
+					],
+					"query": [
+						{
+							"key": "xml",
+							"value": "true  "
+						}
+					]
+				},
+				"description": "fetch passenger by id as XML"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Passenger",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/passenger?firstname=jinal&lastname=shah&age=23&gender=male&phone=9172343234",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"passenger"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "jinal"
+						},
+						{
+							"key": "lastname",
+							"value": "shah"
+						},
+						{
+							"key": "age",
+							"value": "23"
+						},
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "phone",
+							"value": "9172343234"
+						}
+					]
+				},
+				"description": "Creates create Passenger"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Passenger",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/passenger/7beb921f-a000-4e6e-871e-00a44185f389?firstname=ashna&lastname=shah&age=25&gender=female&phone=4352343232",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"passenger",
+						"7beb921f-a000-4e6e-871e-00a44185f389"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "ashna"
+						},
+						{
+							"key": "lastname",
+							"value": "shah"
+						},
+						{
+							"key": "age",
+							"value": "25"
+						},
+						{
+							"key": "gender",
+							"value": "female"
+						},
+						{
+							"key": "phone",
+							"value": "4352343232"
+						}
+					]
+				},
+				"description": "Update Passenger"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Passenger by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/passenger/26cc83af-9443-4ec7-8913-945d3f983f0d",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"passenger",
+						"26cc83af-9443-4ec7-8913-945d3f983f0d"
+					]
+				},
+				"description": "Delete passenger by id"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Reservation by ReservationID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/reservation/60c0912d-4298-4cfc-a95f-a54768d687ba",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"reservation",
+						"60c0912d-4298-4cfc-a95f-a54768d687ba"
+					]
+				},
+				"description": "Fetch Reservation by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Make Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/reservation?passengerId=26cc83af-9443-4ec7-8913-945d3f983f0d&flightLists=126",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"reservation"
+					],
+					"query": [
+						{
+							"key": "passengerId",
+							"value": "26cc83af-9443-4ec7-8913-945d3f983f0d"
+						},
+						{
+							"key": "flightLists",
+							"value": "126"
+						}
+					]
+				},
+				"description": "Create Reservation by passenger id and flight numbers"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/reservation/reservationNumber?flightsAdded=AA,BB,CC&flightsRemoved=XX,YY",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"reservation",
+						"reservationNumber"
+					],
+					"query": [
+						{
+							"key": "flightsAdded",
+							"value": "AA,BB,CC"
+						},
+						{
+							"key": "flightsRemoved",
+							"value": "XX,YY"
+						}
+					]
+				},
+				"description": "Update Reservation by passenger id and flight numbers"
+			},
+			"response": []
+		},
+		{
+			"name": "Search for Reservation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/reservation?passengerId=e8ee61e5-c567-48e2-b898-2791e27a37b1&flightNumber=123&origin=San%20Jose",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"reservation"
+					],
+					"query": [
+						{
+							"key": "passengerId",
+							"value": "e8ee61e5-c567-48e2-b898-2791e27a37b1"
+						},
+						{
+							"key": "flightNumber",
+							"value": "123"
+						},
+						{
+							"key": "origin",
+							"value": "San%20Jose"
+						}
+					]
+				},
+				"description": "Search for reservation"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/reservation/4c60f5f3-5dfe-42b5-a0be-93393b970652",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"reservation",
+						"4c60f5f3-5dfe-42b5-a0be-93393b970652"
+					]
+				},
+				"description": "cancel reservation "
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Flight by FlightNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/flight/121",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"flight",
+						"121"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Flight by FlightNumber as XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/flight/125?xml=true",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"flight",
+						"125"
+					],
+					"query": [
+						{
+							"key": "xml",
+							"value": "true"
+						}
+					]
+				},
+				"description": "fetch flight in XML"
+			},
+			"response": []
+		},
+		{
+			"name": "Create or Update Flight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/flight/124?price=100&from=Houston&to=San%20Jose&departureTime=2018-05-17-13&arrivalTime=2018-05-17-17&description=Direct%20flight&capacity=250&model=Boeing%20747&manufacturer=airbus&year=1993",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"flight",
+						"124"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "100"
+						},
+						{
+							"key": "from",
+							"value": "Houston"
+						},
+						{
+							"key": "to",
+							"value": "San%20Jose"
+						},
+						{
+							"key": "departureTime",
+							"value": "2018-05-17-13"
+						},
+						{
+							"key": "arrivalTime",
+							"value": "2018-05-17-17"
+						},
+						{
+							"key": "description",
+							"value": "Direct%20flight"
+						},
+						{
+							"key": "capacity",
+							"value": "250"
+						},
+						{
+							"key": "model",
+							"value": "Boeing%20747"
+						},
+						{
+							"key": "manufacturer",
+							"value": "airbus"
+						},
+						{
+							"key": "year",
+							"value": "1993"
+						}
+					]
+				},
+				"description": "Creates Flight"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Flight",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://airlineresevation-springboot.us-west-1.elasticbeanstalk.com/flight/124",
+					"protocol": "http",
+					"host": [
+						"airlineresevation-springboot",
+						"us-west-1",
+						"elasticbeanstalk",
+						"com"
+					],
+					"path": [
+						"flight",
+						"124"
+					]
+				},
+				"description": "Delete Flight by ID"
+			},
+			"response": []
+		}
+	]
+}
