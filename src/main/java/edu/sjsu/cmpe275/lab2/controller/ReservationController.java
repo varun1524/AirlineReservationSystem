@@ -55,7 +55,7 @@ public class ReservationController {
     }
 
     @DeleteMapping(path = "/{reservationNumber}")
-    public ResponseEntity deletePassenger(@PathVariable("reservationNumber") String reservationNumber){
+    public ResponseEntity deleteReservation(@PathVariable("reservationNumber") String reservationNumber){
         ResponseEntity responseEntity = null;
         try{
             responseEntity = reservationService.cancelReservation(reservationNumber);
