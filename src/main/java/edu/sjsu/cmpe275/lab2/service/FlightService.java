@@ -41,12 +41,12 @@ public class FlightService {
                     responseEntity = new ResponseEntity(XML.toString(jsonObject), HttpStatus.OK);
                 }
                 else {
-                    responseEntity = new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
-//                    responseEntity = new ResponseEntity(flight, status);
+                    //responseEntity = new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
+                    responseEntity = new ResponseEntity(flight, HttpStatus.OK);
                 }
             }
             else {
-                responseEntity = new ResponseEntity(responseService.getJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
+                responseEntity = new ResponseEntity(responseService.getJSONResponse("FLight doesn not exist with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
             }
         }
         catch (Exception e){
