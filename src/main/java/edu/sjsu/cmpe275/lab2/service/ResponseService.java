@@ -8,6 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseService {
 
+    /**
+     * JSON formatting of ResponseEntity from Services
+     * @param message Success or fail message
+     * @param status HTTP status
+     * @param errorType Custom error type
+     * @return JSON object including all parameters
+     */
     public String getJSONResponse(String message, HttpStatus status, String errorType){
         JSONObject responseJsonObject = new JSONObject();
         JSONObject jsonObject1 = new JSONObject();
@@ -17,6 +24,13 @@ public class ResponseService {
         return responseJsonObject.toString();
     }
 
+    /**
+     * XML formatting of ResponseEntity from Services
+     * @param message Success or fail message
+     * @param status HTTP status
+     * @param errorType Custom error type
+     * @return XML object including all parameters
+     */
     public String getXMLResponse(String message, HttpStatus status, String errorType){
         JSONObject responseJsonObject = new JSONObject();
         JSONObject jsonObject1 = new JSONObject();
