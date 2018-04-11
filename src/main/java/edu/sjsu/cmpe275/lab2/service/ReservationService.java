@@ -243,15 +243,15 @@ public class ReservationService {
             responseEntity = new ResponseEntity(responseService.getJSONResponse("No Reservations available for given input", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
 
             //region <Passenger Id Exists>
-            if(passengerId!=null){
+            if(passengerId!=null && passengerId != ""){
                 Passenger passenger = passengerRepository.findByPassengerId(passengerId);
                 if(passenger!=null) {
-                    if (flightNumber != null) {
+                    if (flightNumber != null && flightNumber!="") {
                         Flight flight = flightRepository.findByFlightNumber(flightNumber);
                         if(flight!=null){
 
-                            if (origin != null) {
-                                if (to != null) {
+                            if (origin != null && origin != "") {
+                                if (to != null && to !="" ) {
                                     //passenger, flightno, origin, to
                                     if (flight.getDestination().equals(to) && flight.getSource().equals(origin)) {
                                         //successful return
@@ -270,7 +270,7 @@ public class ReservationService {
                                         }
                                     }
                                 }
-                            } else if (to != null) {
+                            } else if (to != null && to != "") {
                                 if (flight.getDestination().equals(to)) {
                                     reservation = reservationRepository.findByFlightsAndPassenger(flight, passenger);
                                     if (reservation != null) {
@@ -290,12 +290,12 @@ public class ReservationService {
             }
             //endregion
             //region <Passenger Id does not exists, FlightNumber Exists>
-            else if(flightNumber!=null){
+            else if(flightNumber!=null && flightNumber !=""){
                 Flight flight = flightRepository.findByFlightNumber(flightNumber);
                 List<Reservation> reservations = null;
                 if(flight!=null){
-                    if(origin!=null){
-                        if(to!=null){
+                    if(origin!=null && origin!=""){
+                        if(to!=null && to!=""){
                             //passenger, flightno, origin, to
                             if(flight.getDestination().equals(to) && flight.getSource().equals(origin)){
                                 //successful return
@@ -314,7 +314,7 @@ public class ReservationService {
                             }
                         }
                     }
-                    else if(to!=null) {
+                    else if(to!=null && to!="") {
                         if(flight.getDestination().equals(to)){
                             reservations = reservationRepository.findAllByFlights(flight);
                             if(reservations.size()>0){
