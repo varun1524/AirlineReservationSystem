@@ -85,15 +85,24 @@ public class PassengerService {
 
     }
 
-    public Passenger createPassenger(Map<String,String> map){
+    public ResponseEntity createPassenger(Map<String,String> map){
+        ResponseEntity responseEntity = null;
         Passenger passenger = new Passenger();
         passenger.setFirstname(map.get("firstname"));
         passenger.setLastname(map.get("lastname"));
         passenger.setGender(map.get("gender"));
         passenger.setAge(Integer.parseInt(map.get("age")));
         passenger.setPhone(map.get("phone"));
-
-        return save(passenger);
+        Passenger passenger1 = passengerRepository.save(passenger);
+        if(passenger1!=null){
+            responseEntity = new ResponseEntity(passenger1.getPassengerJSON().toString(), HttpStatus.OK);
+        }
+        else {
+            responseEntity = new ResponseEntity(responseService.getJSONResponse(
+                    "Failed to create passenger with given details",
+                    HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
     }
 
     @Transactional(rollbackFor = {Exception.class})

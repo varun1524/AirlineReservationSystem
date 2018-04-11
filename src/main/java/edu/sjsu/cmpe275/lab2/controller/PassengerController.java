@@ -23,8 +23,7 @@ public class PassengerController {
     // API 3
     @PostMapping(path = "")
     public ResponseEntity createPassenger(@RequestParam Map<String,String> params){
-        Passenger passenger = passengerService.createPassenger(params);
-        return new ResponseEntity(params,HttpStatus.OK);
+        return passengerService.createPassenger(params);
     }
 
     // API 1&2
