@@ -47,12 +47,21 @@ public class FlightControllerTest {
     }
 
 
+    /**
+     * Tests existence of flight in database
+     * @throws UnirestException
+     */
     @Test
-    // Positive test, if lfight exists
+    // Positive test, if flight exists
     public void fetchFlight_pos() throws UnirestException {
         HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/flight/121").asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
+
+    /**
+     * Tests non-existence of flight
+     * @throws UnirestException
+     */
     @Test
     // Negative test, if flight does not exist
     public void fetchFlight_neg() throws UnirestException {
@@ -60,6 +69,10 @@ public class FlightControllerTest {
         Assert.assertEquals(HttpStatus.NOT_FOUND.value(),jsonresponse.getStatus());
     }
 
+    /**
+     * Test if flight can be created
+     * @throws UnirestException
+     */
     @Test
     //Positive test, flight creation
     public void createFlight() throws UnirestException {
@@ -72,6 +85,11 @@ public class FlightControllerTest {
 
     }
 
+
+    /**
+     * Tests deleting a flight in database
+     * @throws UnirestException
+     */
     @Test
     //Positive test, if flight exists
     public void deleteFlight_pos() throws UnirestException {
@@ -81,6 +99,10 @@ public class FlightControllerTest {
         Assert.assertEquals(status,HttpStatus.OK.value());
     }
 
+    /**
+     * Tests deleting a file not in database
+     * @throws UnirestException
+     */
     @Test
     //Negative test, if flight doesn't exists
     public void deleteFlight_neg() throws UnirestException {
