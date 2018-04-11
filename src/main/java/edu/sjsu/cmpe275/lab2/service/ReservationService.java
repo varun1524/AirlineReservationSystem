@@ -32,14 +32,28 @@ public class ReservationService {
     ResponseService responseService;
 
 
+    /**
+     * Add a reservation to database
+     * @param reservation Object of type Reservation
+     * @return Newly created reservation object record
+     */
     public Reservation save(Reservation reservation){
         return reservationRepository.save(reservation);
     }
 
+    /**
+     * List of all the reservations
+     * @return List of Reservation Objects
+     */
     public List<Reservation> findAll(){
         return reservationRepository.findAll();
     }
 
+    /**
+     * Retrieves a reservation by reservationNumber
+     * @param reservationNumber
+     * @return Reservation record corresponding to given reservationNumber
+     */
     public ResponseEntity findReservationsByID(String reservationNumber){
         ResponseEntity responseEntity = null;
         Reservation reservation = null;
@@ -59,6 +73,12 @@ public class ReservationService {
         return responseEntity;
     }
 
+    /**
+     * Making a new reservation
+     * @param params (key,value) pairs of parameters and their values
+     * @return Newl created reservation record
+     * @throws Exception Exception if value is null
+     */
     public ResponseEntity<String> makeReservation(Map<String, String> params) throws Exception{
         ResponseEntity<String> responseEntity = null;
         HttpStatus status = HttpStatus.NOT_FOUND;
@@ -135,6 +155,11 @@ public class ReservationService {
         return responseEntity;
     }
 
+    /**
+     * Check if flights have overlap
+     * @param flights List of flights to find overlap within
+     * @return boolen value
+     */
     private boolean checkInterBetweenOverLapping(List<Flight> flights){
         boolean result = true;
         for(Flight flight : flights){
@@ -156,6 +181,13 @@ public class ReservationService {
         return result;
     }
 
+    /**
+     * Create a new repository
+     * @param newflightList List of flights
+     * @param passenger Passenger record search parameter
+     * @return newly created reservation record
+     * @throws Exception if value is null
+     */
     @Transactional(rollbackFor = {Exception.class})
     protected Reservation createReservationEntry(List<Flight> newflightList, Passenger passenger) throws Exception{
         double price = 0;
@@ -192,6 +224,11 @@ public class ReservationService {
 
     //Search Reservation
 
+    /**
+     * Search for reservation as per search parameters
+     * @param params (key,value) pairs of parameters and values
+     * @return Json representation of reservation
+     */
     public ResponseEntity searchForReservation(Map<String, String> params){
         ResponseEntity responseEntity = null;
         try{
@@ -302,6 +339,11 @@ public class ReservationService {
         return responseEntity;
     }
 
+    /**
+     * Cancel a reservation
+     * @param reservationNumber Cancel a reservation corresponsing to reservationNumebr
+     * @return newly created reservation object
+     */
     @Transactional(rollbackFor = {Exception.class})
     public ResponseEntity<String> cancelReservation(String reservationNumber){
         ResponseEntity<String> responseEntity = null;
