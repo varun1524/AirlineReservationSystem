@@ -38,12 +38,17 @@ public class PassengerController {
      *
      * @param id passengerId of passenger to be displayed
      * @param map pass xml=true for XML format
-     * @return Passenger details including reservations & flights
+     * @return Passenger details including reservations and flights
      */
     @JsonView({PassengerView.summary.class})
     @GetMapping(path = "/{id}")
-    public ResponseEntity displayPassenger(@PathVariable("id") String id, Map<String,String> map){
-        return passengerService.findByPassengerId(id);
+    public ResponseEntity displayPassenger(@PathVariable("id") String id,
+                                           @RequestParam(value = "xml", required = false) String xml){
+        boolean isResponseTypeXML = false;
+        if(xml!=null && xml.equals("true")){
+            isResponseTypeXML = true;
+        }
+        return passengerService.findByPassengerId(id, isResponseTypeXML);
         //Return XML if map.get("xml") is true
     }
 
@@ -57,8 +62,8 @@ public class PassengerController {
      */
     @PutMapping(path = "/{id}")
     public ResponseEntity updatePassenger(@PathVariable("id") String id, Map<String,String> map){
-        Passenger passenger = passengerService.updatePassenger(id,map);
-        return new ResponseEntity(passenger,HttpStatus.OK);
+        ResponseEntity responseEntity = passengerService.updatePassenger(id,map);
+        return responseEntity;
 
     }
 

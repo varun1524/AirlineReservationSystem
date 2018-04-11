@@ -6,7 +6,7 @@ import edu.sjsu.cmpe275.lab2.entity.Reservation;
 import edu.sjsu.cmpe275.lab2.repository.FlightRepository;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import edu.sjsu.cmpe275.lab2.repository.ReservationRepository;
-import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 @Service
 public class PassengerService {
     @Autowired
@@ -38,55 +41,67 @@ public class PassengerService {
         this.passengerRepository =  passengerRepository;
     }
 
-    public Passenger save(Passenger passenger){
-        return passengerRepository.save(passenger);
-    }
 
-    public ResponseEntity<String> findByPassengerId(String id){
-        Passenger pObj= null;
-        HttpStatus status = null;
+    /**
+     * Find Passenger details by passenger id
+     * @param id - passenger id
+     * @return - ResponseEntity Object with JSON response
+     */
+    public ResponseEntity<String> findByPassengerId(String id, boolean xml){
+        ResponseEntity<String> responseEntity = null;
         Passenger passenger = null;
-        JSONObject jsonObject = new JSONObject();
         try{
             passenger = passengerRepository.findByPassengerId(id);
             if(passenger!=null){
-                status = HttpStatus.OK;
-                jsonObject = passenger.getWholePassengerDetailsJSON();
+                if(xml){
+                    responseEntity = new ResponseEntity<>(XML.toString(passenger.getWholePassengerDetailsJSON()),
+                            HttpStatus.OK);
+                }
+                else {
+                    responseEntity = new ResponseEntity<>(passenger.getWholePassengerDetailsJSON().toString(),
+                            HttpStatus.OK);
+                }
             }
             else {
-                JSONObject jsonObject1 = new JSONObject();
-                jsonObject1.put("msg", "Failed to delete Passenger with ID "+ id);
-                jsonObject1.put("code", status);
-                jsonObject.put("Bad Request",jsonObject1);
-
+                responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
+                        "Sorry, the requested passenger with id " + id +" does not exist",
+                        HttpStatus.NOT_FOUND,
+                        "Bad Request"), HttpStatus.NOT_FOUND);
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
 
-        return new ResponseEntity<>(jsonObject.toString(),status);
-//        return new ResponseEntity(passenger, status);
+        return responseEntity;
     }
 
-    public List<Passenger> findAllPassengers(){
-        return passengerRepository.findAll();
-    }
-
-    public Passenger updatePassenger(String id, Map<String,String> map) {
+    /**
+     * Update Passenger entry in Database
+     * @param id  Passenger Id
+     * @param map Passenger data in key-value pair
+     * @return ResponseEntity Object with JSON response
+     */
+    public ResponseEntity<Passenger> updatePassenger(String id, Map<String,String> map) {
+        ResponseEntity<Passenger> responseEntity = null;
         Passenger passenger = passengerRepository.findByPassengerId(id);
         passenger.setFirstname(map.get("firstname"));
         passenger.setLastname(map.get("lastname"));
         passenger.setAge(Integer.parseInt(map.get("age")));
         passenger.setGender(map.get("gender"));
         passenger.setPhone(map.get("phone"));
-
-        return passenger;
+        responseEntity = new ResponseEntity<>(passenger, HttpStatus.OK);
+        return responseEntity;
 
     }
 
-    public ResponseEntity createPassenger(Map<String,String> map){
-        ResponseEntity responseEntity = null;
+    /**
+     * Create Passenger entry in Database
+     * @param map Passenger data in key-value pair
+     * @return ResponseEntity Object with JSON response
+     */
+    public ResponseEntity<String> createPassenger(Map<String,String> map){
+        ResponseEntity<String> responseEntity = null;
         Passenger passenger = new Passenger();
         passenger.setFirstname(map.get("firstname"));
         passenger.setLastname(map.get("lastname"));
@@ -95,16 +110,22 @@ public class PassengerService {
         passenger.setPhone(map.get("phone"));
         Passenger passenger1 = passengerRepository.save(passenger);
         if(passenger1!=null){
-            responseEntity = new ResponseEntity(passenger1.getPassengerJSON().toString(), HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(passenger1.getPassengerJSON().toString(), HttpStatus.OK);
         }
         else {
-            responseEntity = new ResponseEntity(responseService.getJSONResponse(
+            responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
                     "Failed to create passenger with given details",
                     HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
 
+    /**
+     * Delete Passenger with Passenger ID
+     * @param id Passenger ID to be removed
+     * @return ResponseEntity object with response
+     * @throws Exception throws Exception in case of failure to perform any operation and performs roll back
+     */
     @Transactional(rollbackFor = {Exception.class})
     public ResponseEntity<String> deletePassenger(String id) throws Exception{
         String msg="";
@@ -123,9 +144,6 @@ public class PassengerService {
                 if(!flight.getPassengers().remove(passenger)){
                     throw new Exception("Error. Roll Back");
                 }
-                else {
-//                    flightRepository.save(flight);
-                }
             }
             for(Reservation reservation : reservationList){
                 if(reservationRepository.deleteReservationByReservationNumber(reservation.getReservationNumber())!=1){
@@ -143,6 +161,4 @@ public class PassengerService {
         }
         return responseEntity;
     }
-
-
 }
