@@ -21,12 +21,25 @@ public class PassengerController {
 
 
     // API 3
+
+    /**
+     *
+     * @param params (key,value) pairs of parameters and values for new object
+     * @return newly created record
+     */
     @PostMapping(path = "")
     public ResponseEntity createPassenger(@RequestParam Map<String,String> params){
         return passengerService.createPassenger(params);
     }
 
     // API 1&2
+
+    /**
+     *
+     * @param id passengerId of passenger to be displayed
+     * @param map pass xml=true for XML format
+     * @return Passenger details including reservations & flights
+     */
     @JsonView({PassengerView.summary.class})
     @GetMapping(path = "/{id}")
     public ResponseEntity displayPassenger(@PathVariable("id") String id, Map<String,String> map){
@@ -35,6 +48,13 @@ public class PassengerController {
     }
 
     //Update Passenger Details. API4
+
+    /**
+     *
+     * @param id passengerId of passenger whose record is to change
+     * @param map (key,value) pairs of updated values and parameters
+     * @return newly created record
+     */
     @PutMapping(path = "/{id}")
     public ResponseEntity updatePassenger(@PathVariable("id") String id, Map<String,String> map){
         Passenger passenger = passengerService.updatePassenger(id,map);
@@ -43,6 +63,13 @@ public class PassengerController {
     }
 
     //Delete passenger. API 5
+
+    /**
+     *
+     *
+     * @param id passengerId of passenger who is to be deleted
+     * @return passenger information of the deleted record
+     */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deletePassenger(@PathVariable("id") String id){
         ResponseEntity responseEntity = null;
