@@ -38,6 +38,10 @@ public class PassengerControllerTest {
     public void tearDown() throws Exception {
     }
 
+    /**
+     * Test creating a new Passenger
+     * @throws UnirestException
+     */
     @Test
     // Positive test for making Passenger
     // There cannot be negative as URL will always have those parameters (as given)
@@ -52,6 +56,11 @@ public class PassengerControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
+
+    /**
+     * Test displaying passenger from database
+     * @throws UnirestException
+     */
     @Test
     // Positive test for displaying passenger
     public void stage2_displayPassenger_pos() throws UnirestException {
@@ -60,6 +69,10 @@ public class PassengerControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
+    /**
+     * Tests updating of a passenger in database
+     * @throws UnirestException
+     */
     @Test
     public void stage3_updatePassenger() throws UnirestException {
         String url = "http://localhost:8080/passenger/"+PassengerId+"?firstname=XX&lastname=YY&age=11&gender=famale&phone=123";
@@ -67,6 +80,10 @@ public class PassengerControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
+    /**
+     * Tests deleting passenger
+     * @throws UnirestException
+     */
     @Test
     // Deleting passenger if passenger exists
     public void stage4_deletePassenger_pos() throws UnirestException {
@@ -79,6 +96,10 @@ public class PassengerControllerTest {
         Assert.assertEquals(status,200);
     }
 
+    /**
+     * Testing display of passenger not in database
+     * @throws UnirestException
+     */
     @Test
     //Negative test if passenger doesn't exist
     public void stage5_displayPassenger_neg() throws UnirestException {
@@ -87,6 +108,10 @@ public class PassengerControllerTest {
         Assert.assertEquals(404,jsonresponse.getStatus());
     }
 
+    /**
+     * Deleting passenger not in database
+     * @throws UnirestException
+     */
     @Test
     // Deleting passenger if passenger does not exists
     public void stage6_deletePassenger_neg() throws UnirestException {
