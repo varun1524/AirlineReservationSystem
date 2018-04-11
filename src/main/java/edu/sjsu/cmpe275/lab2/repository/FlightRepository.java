@@ -13,10 +13,24 @@ import java.util.List;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, String> {
 
+    /**
+     *Returns list of all flights in database
+     * @return List of Flight in the database
+     */
     List<Flight> findAll();
 
+    /**
+     * Find flight given the flightNumber
+     * @param flightNumber flightNumber whose record is to be searched
+     * @return Flight record corresponding to the given flightNumber
+     */
     Flight findByFlightNumber(String flightNumber);
 
+    /**
+     * Deleting flight given flightNumber
+     * @param flightNumber flightId by which to delete the Flight
+     * @return Newly deleted flight record
+     */
     @Transactional
     int deleteFlightByFlightNumber(String flightNumber);
 
