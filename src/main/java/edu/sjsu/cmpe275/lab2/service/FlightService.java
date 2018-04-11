@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Map;
 
 
+/**
+ * @author varunshah
+ *
+ * Service for Flight Controller
+ */
 @Service
 public class FlightService {
     @Autowired

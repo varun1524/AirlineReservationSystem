@@ -7,6 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Sannisth Soni
+ *
+ * Repository for Passenger Entity
+ */
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, String> {
 

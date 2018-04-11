@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author varunshah
+ *
+ * Repository for Reservation Entity
+ */
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
 

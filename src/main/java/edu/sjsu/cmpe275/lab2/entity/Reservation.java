@@ -12,6 +12,12 @@ import java.util.List;
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reservationNumber")
 //@JsonIgnoreProperties(allowSetters = true, value = { "passenger" })
+
+/**
+ * @author varunshah
+ *
+ * Entity Class
+ */
 @Entity
 @Table(name = "reservation")
 public class Reservation {

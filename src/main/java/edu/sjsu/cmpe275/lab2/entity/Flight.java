@@ -13,6 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author varunshah
+ *
+ * Entity Class
+ */
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "flightNumber")
 @Entity
 @Table(name = "flight")
@@ -32,20 +37,12 @@ public class Flight {
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String destination;
 
-    /*
-    ** Date format: yy-mm-dd-hh, do not include minutes and seconds.
-    ** Example: 2018-03-22-19
-    ** The system only needs to supports PST. You can ignore other time zones.
-    */
-
-    //    @Temporal(TemporalType.TIMESTAMP)
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "departure_time")
     @NotNull
     private Date departureTime;
 
-    //  @Temporal(TemporalType.TIMESTAMP)
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @JsonFormat(pattern="yyyy-MM-dd-HH")
     @Column(name = "arrival_time")

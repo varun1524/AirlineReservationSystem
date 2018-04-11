@@ -17,6 +17,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author varunshah
+ *
+ * Service for Reservation Controller
+ */
 @Service
 public class ReservationService {
     @Autowired

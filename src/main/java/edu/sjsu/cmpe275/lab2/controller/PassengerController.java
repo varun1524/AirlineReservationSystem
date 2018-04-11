@@ -1,17 +1,20 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.service.PassengerService;
 import edu.sjsu.cmpe275.lab2.view.PassengerView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 
+/**
+ * @author Sannisth Soni
+ *
+ * Passenger Controller
+ */
 @RestController
 @RequestMapping(path = "/passenger")
 public class PassengerController {
@@ -34,7 +37,7 @@ public class PassengerController {
      * Fetches Passenger Details from database by Passenger Id
      * @param id Passenger Id
      * @param xml boolean value to inform type of response json or xml
-     * @return
+     * @return ResponseEntity Object
      */
     @JsonView({PassengerView.summary.class})
     @GetMapping(path = "/{id}")

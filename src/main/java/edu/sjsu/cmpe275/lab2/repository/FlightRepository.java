@@ -10,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author varunshah
+ *
+ * Repository for Flight Entity
+ */
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, String> {
 

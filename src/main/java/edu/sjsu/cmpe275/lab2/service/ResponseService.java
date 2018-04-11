@@ -5,6 +5,10 @@ import org.json.XML;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author varunshah
+ * Response Service class for json and xml response
+ */
 @Service
 public class ResponseService {
 

@@ -8,7 +8,10 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 
-
+/**
+ * @author Sannisth Soni
+ * Reservation Controller Unit Test
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FlightControllerTest {
 

@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * @author varunshah
+ *
+ * Reservation Controller
+ */
 @RestController
 @RequestMapping(path = "/reservation")
 public class ReservationController {

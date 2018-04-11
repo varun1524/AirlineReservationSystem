@@ -11,15 +11,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "planeId")
+/**
+ * @author varunshah
+ *
+ * Entity Class
+ */
 @Embeddable
 @Table(name = "plane")
 public class Plane {
-
-//    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "plane_id", nullable = false)
-//    private int planeId;
 
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
@@ -36,14 +35,6 @@ public class Plane {
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @NotNull
     private int year;
-
-//    public int getPlaneId() {
-//        return planeId;
-//    }
-//
-//    public void setPlaneId(int planeId) {
-//        this.planeId = planeId;
-//    }
 
     public int getCapacity() {
         return capacity;

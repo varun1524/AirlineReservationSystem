@@ -11,6 +11,11 @@ import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * @author Sannisth Soni
+ *
+ * Entity Class
+ */
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "passengerId")
 @Entity
 public class Passenger {

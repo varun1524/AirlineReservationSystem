@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Sannisth Soni
  *
+ * Service for Passenger Controller
  */
 @Service
 public class PassengerService {
