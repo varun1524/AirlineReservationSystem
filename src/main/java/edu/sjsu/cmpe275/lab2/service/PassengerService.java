@@ -43,8 +43,9 @@ public class PassengerService {
 
 
     /**
-     * Find Passenger details by passenger id
+     *
      * @param id - passenger id
+     * @param xml - if true response in XML format else json format
      * @return - ResponseEntity Object with JSON response
      */
     public ResponseEntity<String> findByPassengerId(String id, boolean xml){
