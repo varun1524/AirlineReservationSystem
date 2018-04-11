@@ -31,12 +31,12 @@ public class PassengerControllerTest {
      */
     @Test
     public void stage1_createPassenger() throws UnirestException {
-        String url = "http://localhost:8080/passenger?firstname=sannisth&lastname=shah&age=22&gender=male&phone=45656543";
+        String url = "http://localhost:8080/passenger?firstname=sannisth&lastname=shah&age=22&gender=male&phone=6545654510";
         HttpResponse<String> jsonresponse = Unirest.post(url).asObject(String.class);
         JSONObject jsonObject = new JSONObject(jsonresponse.getBody());
         System.out.println(jsonObject);
-        System.out.println(jsonObject.get("passengerId"));
-        PassengerId = jsonObject.get("passengerId").toString();
+        System.out.println();
+        PassengerId = jsonObject.getJSONObject("passenger").getString("passengerId");
         System.out.println(PassengerId);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
@@ -59,7 +59,7 @@ public class PassengerControllerTest {
      */
     @Test
     public void stage3_updatePassenger() throws UnirestException {
-        String url = "http://localhost:8080/passenger/"+PassengerId+"?firstname=XX&lastname=YY&age=11&gender=famale&phone=123";
+        String url = "http://localhost:8080/passenger/"+PassengerId+"?firstname=XX&lastname=YY&age=11&gender=famale&phone=123324323";
         HttpResponse<String> jsonresponse = Unirest.put(url).asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }

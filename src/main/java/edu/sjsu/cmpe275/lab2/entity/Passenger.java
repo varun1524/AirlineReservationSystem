@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,7 +56,10 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private List<Flight> flights;
 
-    public Passenger(){}
+    public Passenger(){
+        this.flights = Collections.emptyList();
+        this.reservations = Collections.emptyList();
+    }
 
     public List<Flight> getFlights() {
         return flights;
