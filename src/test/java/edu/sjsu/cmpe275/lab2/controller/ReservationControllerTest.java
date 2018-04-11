@@ -38,6 +38,10 @@ public class ReservationControllerTest {
     public void tearDown() throws Exception {
     }
 
+    /**
+     * Testing making a new reservation
+     * @throws UnirestException
+     */
     @Test
     public void makeReservation() throws UnirestException {
         String url = "http://localhost:8888/reservation?passengerId=aecb25dc-5d7f-49de-ba26-41eb3badc9c3&flightLists=121";
@@ -45,6 +49,10 @@ public class ReservationControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
+    /**
+     * Testing searching for a reservation from database
+     * @throws UnirestException
+     */
     @Test
     //Positive test, if reservation exists
     public void searchForReservation_pos() throws UnirestException {
@@ -54,6 +62,10 @@ public class ReservationControllerTest {
 
     }
 
+    /**
+     * Testing searching for a reservation not in database
+     * @throws UnirestException
+     */
     @Test
     //Negative test, if reservation does not exists
     public void searchForReservation_neg() throws UnirestException {
@@ -63,6 +75,10 @@ public class ReservationControllerTest {
 
     }
 
+    /**
+     * Testing searching reservation from database
+     * @throws UnirestException
+     */
     @Test
     // Positive test, if reservation exists
     public void fetchReservationById_pos() throws UnirestException {
@@ -70,6 +86,10 @@ public class ReservationControllerTest {
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
+    /**
+     * Testing Searching reservation not in database
+     * @throws UnirestException
+     */
     @Test
     // Positive test, if reservation exists
     public void fetchReservationById_neg() throws UnirestException {
@@ -77,6 +97,10 @@ public class ReservationControllerTest {
         Assert.assertEquals(400,jsonresponse.getStatus());
     }
 
+    /**
+     * Testing deleting a reservation from database
+     * @throws UnirestException
+     */
     @Test
     //Positive test, if reservation exists
     public void deleteReservation_pos() throws UnirestException {
@@ -86,6 +110,10 @@ public class ReservationControllerTest {
         Assert.assertEquals(status,HttpStatus.OK.value());
     }
 
+    /**
+     * Testing deleting a reservation not in database
+     * @throws UnirestException
+     */
     @Test
     //Negative test, if reservation exists
     public void deleteReservation_neg() throws UnirestException {
