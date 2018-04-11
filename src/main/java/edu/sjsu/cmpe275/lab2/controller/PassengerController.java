@@ -59,7 +59,7 @@ public class PassengerController {
      * @return newly created record
      */
     @PutMapping(path = "/{id}")
-    public ResponseEntity updatePassenger(@PathVariable("id") String id, Map<String,String> map){
+    public ResponseEntity updatePassenger(@PathVariable("id") String id, @RequestParam Map<String,String> map){
         ResponseEntity responseEntity = passengerService.updatePassenger(id,map);
         return responseEntity;
     }
