@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -174,13 +175,14 @@ public class Flight {
     @Transient
     @JsonIgnore
     public JSONObject getFlightJSON(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("flightNumber", this.getFlightNumber());
         jsonObject.put("price", this.getPrice());
         jsonObject.put("from", this.getSource());
         jsonObject.put("to", this.getDestination());
-        jsonObject.put("departureTime", this.getDepartureTime());
-        jsonObject.put("arrivalTime", this.getArrivalTime());
+        jsonObject.put("departureTime", simpleDateFormat.format(this.getDepartureTime()));
+        jsonObject.put("arrivalTime", simpleDateFormat.format(this.getArrivalTime()));
         jsonObject.put("seatsLeft", this.getSeatsLeft());
         jsonObject.put("description", this.getDescription());
         jsonObject.put("plane", this.getPlane().getPlaneJSON());

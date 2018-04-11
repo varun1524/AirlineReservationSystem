@@ -29,24 +29,23 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
-    public ResponseEntity findByFlightNumber(String flightNumber, boolean responseType){
-        ResponseEntity responseEntity = null;
+    public ResponseEntity<Object> findByFlightNumber(String flightNumber, boolean responseType){
+        ResponseEntity<Object> responseEntity = null;
         JSONObject jsonObject = new JSONObject();
         Flight flight = null;
         try {
             flight = flightRepository.findByFlightNumber(flightNumber);
             if(flight != null){
-                jsonObject = flight.getWholeFlightDetailsJSON();
                 if(responseType){
-                    responseEntity = new ResponseEntity(XML.toString(jsonObject), HttpStatus.OK);
+                    responseEntity = new ResponseEntity<Object>(XML.toString(jsonObject), HttpStatus.OK);
                 }
                 else {
-                    //responseEntity = new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
-                    responseEntity = new ResponseEntity(flight, HttpStatus.OK);
+                    responseEntity = new ResponseEntity<Object>(flight.getWholeFlightDetailsJSON().toString(), HttpStatus.OK);
+//                    responseEntity = new ResponseEntity<>(flight, HttpStatus.OK);
                 }
             }
             else {
-                responseEntity = new ResponseEntity(responseService.getJSONResponse("FLight doesn not exist with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
+                responseEntity = new ResponseEntity<>(responseService.getJSONResponse("FLight doesn not exist with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
             }
         }
         catch (Exception e){
@@ -136,27 +135,27 @@ public class FlightService {
     }
 
     @Transactional
-    public ResponseEntity deleteFlight(String flightNumber){
-        ResponseEntity responseEntity = null;
+    public ResponseEntity<String> deleteFlight(String flightNumber){
+        ResponseEntity<String> responseEntity = null;
         try{
             Flight flight = flightRepository.findByFlightNumber(flightNumber);
             if(flight!=null){
                 if(flight.getReservations().size()==0){
                     if(flightRepository.deleteFlightByFlightNumber(flightNumber)==1){
                         System.out.println("Flight Deleted Successfully");
-                        responseEntity = new ResponseEntity(responseService.getXMLResponse("Flight with number "+ flightNumber +" is deleted successfully", HttpStatus.OK, "Response"), HttpStatus.OK);
+                        responseEntity = new ResponseEntity<>(responseService.getXMLResponse("Flight with number "+ flightNumber +" is deleted successfully", HttpStatus.OK, "Response"), HttpStatus.OK);
                     }
                     else {
                         System.out.println("Failed to delete flight");
-                        responseEntity = new ResponseEntity(responseService.getJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
+                        responseEntity = new ResponseEntity<>(responseService.getJSONResponse("Failed to delete Flight with number "+ flightNumber, HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
                     }
                 }
                 else {
-                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Reservation is made on flight. So it cannot be deleted", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
+                    responseEntity = new ResponseEntity<>(responseService.getJSONResponse("Reservation is made on flight. So it cannot be deleted", HttpStatus.NOT_FOUND, "Bad_Request"), HttpStatus.NOT_FOUND);
                 }
             }
             else {
-                responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight does not exist with flightNumber: "+ flightNumber, HttpStatus.BAD_REQUEST, "Bad_Request"), HttpStatus.BAD_REQUEST);
+                responseEntity = new ResponseEntity<>(responseService.getJSONResponse("Flight does not exist with flightNumber: "+ flightNumber, HttpStatus.BAD_REQUEST, "Bad_Request"), HttpStatus.BAD_REQUEST);
             }
         }
         catch (Exception e){
