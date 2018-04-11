@@ -1,7 +1,6 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import edu.sjsu.cmpe275.lab2.view.FlightView;
 import edu.sjsu.cmpe275.lab2.view.PassengerView;
 import edu.sjsu.cmpe275.lab2.view.ReservationView;
 import org.hibernate.annotations.GenericGenerator;
@@ -25,7 +24,7 @@ public class Reservation {
     private String reservationNumber;
 
     @JsonView({PassengerView.summary.class, ReservationView.summary.class})
-    private double price; // sum of each flight’s price.
+    private double price;
 
     @JsonView({ReservationView.summary.class})
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})

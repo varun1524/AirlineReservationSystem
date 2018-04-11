@@ -89,7 +89,7 @@ public class Flight {
     }
 
     public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+        this.flightNumber = flightNumber.toLowerCase();
     }
 
     public double getPrice() {
@@ -105,7 +105,7 @@ public class Flight {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source.toLowerCase();
     }
 
     public String getDestination() {
@@ -113,7 +113,7 @@ public class Flight {
     }
 
     public void setDestination(String destination) {
-        this.destination = destination;
+        this.destination = destination.toLowerCase();
     }
 
     public Date getDepartureTime() {
@@ -145,7 +145,7 @@ public class Flight {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.toLowerCase();
     }
 
     public Plane getPlane() {

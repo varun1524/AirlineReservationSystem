@@ -16,11 +16,11 @@ import java.util.List;
 public class Passenger {
 
 
-    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "passenger_id", nullable = false)
+    @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
     private String passengerId;
 
     @JsonView({PassengerView.summary.class, ReservationView.summary.class, FlightView.summary.class})
@@ -73,7 +73,7 @@ public class Passenger {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstname = firstname.toLowerCase();
     }
 
     public String getLastname() {
@@ -81,7 +81,7 @@ public class Passenger {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = lastname.toLowerCase();
     }
 
     public int getAge() {
@@ -97,7 +97,7 @@ public class Passenger {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = gender.toLowerCase();
     }
 
     public String getPhone() {
