@@ -96,7 +96,7 @@ public class FlightService {
             if (flight == null) {
                 Flight flightObj = flightRepository.save(receivedFlight);
                 if(flightObj!=null){
-                    responseEntity = new ResponseEntity(flightObj, HttpStatus.OK);
+                    responseEntity = new ResponseEntity(flightObj.getWholeFlightDetailsJSON(), HttpStatus.OK);
                 }
                 else {
                     responseEntity = new ResponseEntity(responseService.getJSONResponse("Error while creating Flight", HttpStatus.NOT_FOUND, "Bad Request") ,HttpStatus.NOT_FOUND);
@@ -106,7 +106,7 @@ public class FlightService {
                 if((flight.getPlane().getCapacity()-flight.getSeatsLeft()) < p.getCapacity()) {
                     if(isFlightUpdatable(flight)) {
                         flight = flightRepository.save(receivedFlight);
-                        responseEntity = new ResponseEntity(flight, HttpStatus.OK);
+                        responseEntity = new ResponseEntity(flight.getWholeFlightDetailsJSON(), HttpStatus.OK);
                     }
                     else {
                         responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight time operlaps with passenger's ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);

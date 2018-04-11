@@ -36,24 +36,6 @@ public class ReservationService {
     @Autowired
     ResponseService responseService;
 
-
-    /**
-     * Add a reservation to database
-     * @param reservation Object of type Reservation
-     * @return Newly created reservation object record
-     */
-    public Reservation save(Reservation reservation){
-        return reservationRepository.save(reservation);
-    }
-
-    /**
-     * List of all the reservations
-     * @return List of Reservation Objects
-     */
-    public List<Reservation> findAll(){
-        return reservationRepository.findAll();
-    }
-
     /**
      * Retrieves a reservation by reservationNumber
      * @param reservationNumber Reservation Number
@@ -65,8 +47,8 @@ public class ReservationService {
         try{
             reservation = reservationRepository.findByReservationNumber(reservationNumber);
             if(reservation!=null){
-//                responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
-                responseEntity = new ResponseEntity<>(reservation, HttpStatus.OK);
+                responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
+//                responseEntity = new ResponseEntity<>(reservation, HttpStatus.OK);
             }
             else {
                 responseEntity = new ResponseEntity<>(responseService.getJSONResponse("No Reservation record exist with reservation number: "+ reservationNumber, HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
@@ -262,7 +244,7 @@ public class ReservationService {
                                         //successful return
                                         reservation = reservationRepository.findByFlightsAndPassenger(flight, passenger);
                                         if (reservation != null) {
-                                            responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
+                                            responseEntity = new ResponseEntity(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
                                         }
                                     }
                                 } else {
@@ -271,7 +253,7 @@ public class ReservationService {
                                         //successful return
                                         reservation = reservationRepository.findByFlightsAndPassenger(flight, passenger);
                                         if (reservation != null) {
-                                            responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
+                                            responseEntity = new ResponseEntity(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
                                         }
                                     }
                                 }
@@ -279,14 +261,14 @@ public class ReservationService {
                                 if (flight.getDestination().equals(to)) {
                                     reservation = reservationRepository.findByFlightsAndPassenger(flight, passenger);
                                     if (reservation != null) {
-                                        responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
+                                        responseEntity = new ResponseEntity(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
                                     }
                                 }
                             } else {
                                 //passenger, flightno
                                 reservation = reservationRepository.findByFlightsAndPassenger(flight, passenger);
                                 if (reservation != null) {
-                                    responseEntity = new ResponseEntity(reservation, HttpStatus.OK);
+                                    responseEntity = new ResponseEntity(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
                                 }
                             }
                         }

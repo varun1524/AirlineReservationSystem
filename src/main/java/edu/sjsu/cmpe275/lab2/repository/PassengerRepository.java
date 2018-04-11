@@ -29,6 +29,13 @@ public interface PassengerRepository extends JpaRepository<Passenger, String> {
     List<Passenger> findAll();
 
     /**
+     * Get Passenger by phone number
+     * @param phoneNumber Phone Number of user
+     * @return Passenger record
+     */
+    Passenger findByPhone(String phoneNumber);
+
+    /**
      * Delete passenger corresponding to the given PassengerId
      * @param id PassengerId by which to delete the Passenger
      * @return Newly deleted Passenger record

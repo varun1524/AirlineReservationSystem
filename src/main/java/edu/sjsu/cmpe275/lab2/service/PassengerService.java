@@ -93,7 +93,7 @@ public class PassengerService {
         passenger.setAge(Integer.parseInt(map.get("age")));
         passenger.setGender(map.get("gender"));
         passenger.setPhone(map.get("phone"));
-        responseEntity = new ResponseEntity<>(passenger, HttpStatus.OK);
+        responseEntity = new ResponseEntity(passenger.getWholePassengerDetailsJSON().toString(), HttpStatus.OK);
         return responseEntity;
 
     }
@@ -104,21 +104,21 @@ public class PassengerService {
      * @return ResponseEntity Object with JSON response
      */
     public ResponseEntity<String> createPassenger(Map<String,String> map){
-        ResponseEntity<String> responseEntity = null;
-        Passenger passenger = new Passenger();
-        passenger.setFirstname(map.get("firstname"));
-        passenger.setLastname(map.get("lastname"));
-        passenger.setGender(map.get("gender"));
-        passenger.setAge(Integer.parseInt(map.get("age")));
-        passenger.setPhone(map.get("phone"));
-        Passenger passenger1 = passengerRepository.save(passenger);
-        if(passenger1!=null){
-            responseEntity = new ResponseEntity<>(passenger1.getPassengerJSON().toString(), HttpStatus.OK);
-        }
-        else {
-            responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
-                    "Failed to create passenger with given details",
-                    HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(responseService.getJSONResponse(
+                "Failed to create passenger with given details",
+                HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.BAD_REQUEST);;
+        if(passengerRepository.findByPhone(map.get("phone"))==null){
+            Passenger passenger = new Passenger();
+
+            passenger.setFirstname(map.get("firstname"));
+            passenger.setLastname(map.get("lastname"));
+            passenger.setGender(map.get("gender"));
+            passenger.setAge(Integer.parseInt(map.get("age")));
+            passenger.setPhone(map.get("phone"));
+            Passenger passenger1 = passengerRepository.save(passenger);
+            if(passenger1!=null){
+                responseEntity = new ResponseEntity<>(passenger1.getWholePassengerDetailsJSON().toString(), HttpStatus.OK);
+            }
         }
         return responseEntity;
     }
