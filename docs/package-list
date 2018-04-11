@@ -1,0 +1,6 @@
+edu.sjsu.cmpe275.lab2
+edu.sjsu.cmpe275.lab2.controller
+edu.sjsu.cmpe275.lab2.entity
+edu.sjsu.cmpe275.lab2.repository
+edu.sjsu.cmpe275.lab2.service
+edu.sjsu.cmpe275.lab2.view
