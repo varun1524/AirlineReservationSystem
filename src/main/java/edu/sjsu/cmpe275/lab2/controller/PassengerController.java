@@ -23,7 +23,7 @@ public class PassengerController {
     // API 3
 
     /**
-     *
+     *Creates Passenger with given parameters and values
      * @param params (key,value) pairs of parameters and values for new object
      * @return newly created record
      */
@@ -53,7 +53,7 @@ public class PassengerController {
 
     //Update Passenger Details. API4
     /**
-     *
+     *Updates existing passenger with given parameters and values
      * @param id passengerId of passenger whose record is to change
      * @param map (key,value) pairs of updated values and parameters
      * @return newly created record
@@ -68,7 +68,7 @@ public class PassengerController {
 
     /**
      *
-     *
+     *Deleted passenger with given passengerId
      * @param id passengerId of passenger who is to be deleted
      * @return passenger information of the deleted record
      */
