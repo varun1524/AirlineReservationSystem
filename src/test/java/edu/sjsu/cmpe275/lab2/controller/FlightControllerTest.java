@@ -25,7 +25,7 @@ public class FlightControllerTest {
 
     /**
      * Test if flight can be created
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage1_createFlight() throws UnirestException {
@@ -41,7 +41,7 @@ public class FlightControllerTest {
 
     /**
      * Tests existence of flight in database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage2_fetchFlight_pos() throws UnirestException {
@@ -52,7 +52,7 @@ public class FlightControllerTest {
 
     /**
      * Tests deleting a flight in database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage3_deleteFlight_pos() throws UnirestException {
@@ -64,7 +64,7 @@ public class FlightControllerTest {
 
     /**
      * Tests non-existence of flight
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage4_fetchFlight_neg() throws UnirestException {
@@ -74,7 +74,7 @@ public class FlightControllerTest {
 
     /**
      * Tests deleting a file not in database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage5_deleteFlight_neg() throws UnirestException {

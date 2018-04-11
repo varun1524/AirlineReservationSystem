@@ -23,7 +23,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of Make Reservation Positive
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage1_makeReservation() throws UnirestException {
@@ -38,7 +38,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of Make Reservation Negative
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage2_makeReservation_neg() throws UnirestException {
@@ -49,7 +49,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of fetch Reservation By ID Positive
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage3_fetchReservationById_pos() throws UnirestException {
@@ -59,7 +59,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of searching reservation positive
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage4_searchForReservation_pos() throws UnirestException {
@@ -70,7 +70,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of Deleting Reservation Positive
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage5_deleteReservation_pos() throws UnirestException {
@@ -82,7 +82,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of Searching Reservation Negative
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage6_searchForReservation_neg() throws UnirestException {
@@ -94,7 +94,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of fetch Reservation By ID Negative
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage7_fetchReservationById_neg() throws UnirestException {
@@ -104,7 +104,7 @@ public class ReservationControllerTest {
 
     /**
      * Testing of Deleting Reservation Negative
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage8_deleteReservation_neg() throws UnirestException {

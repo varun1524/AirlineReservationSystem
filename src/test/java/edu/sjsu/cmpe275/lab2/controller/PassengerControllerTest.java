@@ -23,7 +23,7 @@ public class PassengerControllerTest {
 
     /**
      * Test creating a new Passenger
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage1_createPassenger() throws UnirestException {
@@ -40,7 +40,7 @@ public class PassengerControllerTest {
 
     /**
      * Test displaying passenger from database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage2_displayPassenger_pos() throws UnirestException {
@@ -51,7 +51,7 @@ public class PassengerControllerTest {
 
     /**
      * Tests updating of a passenger in database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage3_updatePassenger() throws UnirestException {
@@ -62,7 +62,7 @@ public class PassengerControllerTest {
 
     /**
      * Tests deleting passenger
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage4_deletePassenger_pos() throws UnirestException {
@@ -75,7 +75,7 @@ public class PassengerControllerTest {
 
     /**
      * Testing display of passenger not in database
-     * @throws UnirestException
+     * @throws UnirestException Exception in UnitTest
      */
     @Test
     public void stage5_displayPassenger_neg() throws UnirestException {
