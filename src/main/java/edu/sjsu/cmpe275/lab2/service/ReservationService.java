@@ -54,7 +54,6 @@ public class ReservationService {
      * @param reservationNumber Reservation Number
      * @return Reservation record corresponding to given reservationNumber
      */
-
     public ResponseEntity findReservationsByID(String reservationNumber){
         ResponseEntity responseEntity = null;
         Reservation reservation = null;
