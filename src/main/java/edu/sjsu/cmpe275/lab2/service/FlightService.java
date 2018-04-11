@@ -25,10 +25,12 @@ public class FlightService {
     @Autowired
     ResponseService responseService;
 
-    public List<Flight> findAll(){
-        return flightRepository.findAll();
-    }
-
+    /**
+     * Find flight details by flight number
+     * @param flightNumber Flight Number
+     * @param responseType Response will be type XML if true else JSON
+     * @return Response Entity Object with response
+     */
     public ResponseEntity<Object> findByFlightNumber(String flightNumber, boolean responseType){
         ResponseEntity<Object> responseEntity = null;
         JSONObject jsonObject = new JSONObject();
@@ -54,7 +56,12 @@ public class FlightService {
         return responseEntity;
     }
 
-
+    /**
+     * Adds flight in database and if already exists updates flight details
+     * @param flightNumber Flight Number
+     * @param params Flight data
+     * @return ResponseEntity Object with response data
+     */
     public ResponseEntity addOrUpdateFlight(String flightNumber, Map<String, String> params){
         ResponseEntity responseEntity = null;
         try {
@@ -112,6 +119,12 @@ public class FlightService {
         return responseEntity;
     }
 
+    /**
+     * Checks whether the flight is updatable. Flight which is to be updated should not conflict
+     * with its passenger's other bookings
+     * @param flight Flight Object
+     * @return Boolean if true flight can be updated otherwise cannot be updated
+     */
     private boolean isFlightUpdatable(Flight flight){
         boolean result = true;
         for(Passenger passenger : flight.getPassengers()){
@@ -134,6 +147,11 @@ public class FlightService {
         return result;
     }
 
+    /**
+     * Delete Flight by Flight Number
+     * @param flightNumber Flight Number
+     * @return ResponseEntity Object with response data
+     */
     @Transactional
     public ResponseEntity<String> deleteFlight(String flightNumber){
         ResponseEntity<String> responseEntity = null;

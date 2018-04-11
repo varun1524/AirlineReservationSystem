@@ -1,7 +1,6 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.service.FlightService;
 import edu.sjsu.cmpe275.lab2.view.FlightView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,27 +18,7 @@ public class FlightController {
     FlightService flightService;
 
     /**
-     * This API will return list containing all flights
-     * @return List containing all flights in database
-     */
-    @GetMapping(path = "/fetchAllFlights")
-    public ResponseEntity fetchAllFlights(){
-        List<Flight>  flightList= Collections.emptyList();
-        try{
-            flightList = flightService.findAll();
-            System.out.println("Output");
-            System.out.println(flightList);
-            System.out.println(flightList.size());
-            System.out.println(flightList.get(0).getPlane().getManufacturer());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity(flightList, HttpStatus.OK);
-    }
-
-    /**
-     *
+     * Fetch Flight details by Flight Number
      * @param flightNumber FlightId of the flight
      * @param xml Will return output as XML, if true
      * @return Flight information of given flightNumber
@@ -69,7 +46,7 @@ public class FlightController {
 
 
     /**
-     *
+     * Creates flight and if alread exists updates its details
      * @param flightNumber flightNumber for new Flight
      * @param params map with (parameters,values) as (keys,values)
      * @return The newly created flight
@@ -88,7 +65,7 @@ public class FlightController {
     }
 
     /**
-     *
+     * Deletes flight by flight number
      * @param flightNumber flightNumber which is wanted deleted
      * @return Details of the deleted flight
      */
