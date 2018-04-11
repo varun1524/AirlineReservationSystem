@@ -16,6 +16,11 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
+    /**
+     *
+     * @param params (key,value) pairs of paramenters and values to be passed
+     * @return Reservation information of newly created object
+     */
     @PostMapping
     public ResponseEntity makeReservation(@RequestParam Map<String, String> params){
         ResponseEntity responseEntity = null;
@@ -28,6 +33,12 @@ public class ReservationController {
         return responseEntity;
     }
 
+
+    /**
+     *
+     * @param params(key,value) pairs of paramenters and values to be passed for searching
+     * @return Reservation according to passed parameters
+     */
     @JsonView({ReservationView.summary.class})
     @GetMapping
     public ResponseEntity searchForReservation(@RequestParam Map<String, String> params){
@@ -41,6 +52,10 @@ public class ReservationController {
         return responseEntity;
     }
 
+    /**
+     *
+     * @param reservationNumber reservationNumber which needs to be retrieved
+     * @return Newly searched result     */
     @JsonView({ReservationView.summary.class})
     @GetMapping(path = "/{reservationNumber}")
     public ResponseEntity fetchReservationById(@PathVariable String reservationNumber){
@@ -54,6 +69,12 @@ public class ReservationController {
         return responseEntity;
     }
 
+
+    /**
+     *
+     * @param reservationNumber reservationNumber of the reservation to be deleted.
+     * @return Newly deleted record
+     */
     @DeleteMapping(path = "/{reservationNumber}")
     public ResponseEntity deleteReservation(@PathVariable("reservationNumber") String reservationNumber){
         ResponseEntity responseEntity = null;
