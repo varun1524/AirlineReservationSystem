@@ -46,7 +46,8 @@ public class ReservationControllerTest {
     }
 
     @Test
-    public void searchForReservation() throws UnirestException {
+    //Positive test, if reservation exists
+    public void searchForReservation_pos() throws UnirestException {
         String url = "http://localhost:8888/reservation?passengerId=c4ff53b3-cf1b-46c7-b19d-10ede957dd92&origin=San%20Jose&to=Houston&flightNumber=121";
         HttpResponse<String> jsonresponse = Unirest.post(url).asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
@@ -54,18 +55,42 @@ public class ReservationControllerTest {
     }
 
     @Test
-    public void fetchReservationById() throws UnirestException {
+    //Negative test, if reservation does not exists
+    public void searchForReservation_neg() throws UnirestException {
+        String url = "http://localhost:8888/reservation?passengerId=c4ff53b32&origin=Mars&to=Houston&flightNumber=121";
+        HttpResponse<String> jsonresponse = Unirest.post(url).asObject(String.class);
+        Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
+
+    }
+
+    @Test
+    // Positive test, if reservation exists
+    public void fetchReservationById_pos() throws UnirestException {
         HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/reservation/c4ff53b3-cf1b-46c7-b19d-10ede957dd92").asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
     @Test
-    public void deleteReservation() throws UnirestException {
-        //makeReservation();
+    // Positive test, if reservation exists
+    public void fetchReservationById_neg() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/reservation/f1b-46c7-b19d-10ede957dd92").asObject(String.class);
+        Assert.assertEquals(400,jsonresponse.getStatus());
+    }
+
+    @Test
+    //Positive test, if reservation exists
+    public void deleteReservation_pos() throws UnirestException {
         HttpResponse response = Unirest.delete("http://localhost:8888/reservation/b09a626d-0e0c-4ada-95a6-7cbfd6c1ec2c").asString();
-//        HttpRequestWithBody response = Unirest.delete("http://localhost:8888/flight/121");
         int status = response.getStatus();
         System.out.println(status);
         Assert.assertEquals(status,HttpStatus.OK.value());
+    }
+
+    @Test
+    //Negative test, if reservation exists
+    public void deleteReservation_neg() throws UnirestException {
+        HttpResponse response = Unirest.delete("http://localhost:8888/reservation/a-95a6-7cbfd6c1ec2c").asString();
+        int status = response.getStatus();
+        Assert.assertEquals(status,400);
     }
 }
