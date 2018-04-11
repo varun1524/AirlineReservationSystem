@@ -17,7 +17,7 @@ public class ReservationController {
     ReservationService reservationService;
 
     /**
-     *Creates a new reservation with given paramenters and values
+     * Creates a new reservation with given paramenters and values
      * @param params (key,value) pairs of paramenters and values to be passed
      * @return Reservation information of newly created object
      */
@@ -35,7 +35,7 @@ public class ReservationController {
 
 
     /**
-     *Search for a reservation with given search parameters
+     * Search for a reservation with given search parameters
      * @param params(key,value) pairs of paramenters and values to be passed for searching
      * @return Reservation according to passed parameters
      */
@@ -53,7 +53,7 @@ public class ReservationController {
     }
 
     /**
-     *Retrieves reservation by given reservationId
+     * Retrieves reservation by given reservationId
      * @param reservationNumber reservationNumber which needs to be retrieved
      * @return Newly searched result     */
     @JsonView({ReservationView.summary.class})
@@ -71,7 +71,7 @@ public class ReservationController {
 
 
     /**
-     *Delete reservation for given reservationId
+     * Delete reservation for given reservationId
      * @param reservationNumber reservationNumber of the reservation to be deleted.
      * @return Newly deleted record
      */

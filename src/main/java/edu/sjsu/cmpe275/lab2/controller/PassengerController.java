@@ -20,8 +20,6 @@ public class PassengerController {
     PassengerService passengerService;
 
 
-    // API 3
-
     /**
      *Creates Passenger with given parameters and values
      * @param params (key,value) pairs of parameters and values for new object
@@ -31,8 +29,6 @@ public class PassengerController {
     public ResponseEntity createPassenger(@RequestParam Map<String,String> params){
         return passengerService.createPassenger(params);
     }
-
-    // API 1&2
 
     /**
      * Fetches Passenger Details from database by Passenger Id
@@ -51,9 +47,8 @@ public class PassengerController {
         return passengerService.findByPassengerId(id, isResponseTypeXML);
     }
 
-    //Update Passenger Details. API4
     /**
-     *Updates existing passenger with given parameters and values
+     * Updates existing passenger with given parameters and values
      * @param id passengerId of passenger whose record is to change
      * @param map (key,value) pairs of updated values and parameters
      * @return newly created record
@@ -64,11 +59,8 @@ public class PassengerController {
         return responseEntity;
     }
 
-    //Delete passenger. API 5
-
     /**
-     *
-     *Deleted passenger with given passengerId
+     * Deleted passenger with given passengerId
      * @param id passengerId of passenger who is to be deleted
      * @return passenger information of the deleted record
      */
