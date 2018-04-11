@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping(path = "/flight")
 public class FlightController {
@@ -21,6 +20,10 @@ public class FlightController {
     @Autowired
     FlightService flightService;
 
+    /**
+     * This API will return list containing all flights
+     * @return List containing all flights in database
+     */
     @GetMapping(path = "/fetchAllFlights")
     public ResponseEntity fetchAllFlights(){
         List<Flight>  flightList= Collections.emptyList();
@@ -37,6 +40,12 @@ public class FlightController {
         return new ResponseEntity(flightList, HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param flightNumber FlightId of the flight
+     * @param xml Will return output as XML, if true
+     * @return Flight information of given flightNumber
+     */
     @JsonView({FlightView.summary.class})
     @GetMapping(path = "/{flightNumber}")
     public ResponseEntity fetchFlight(@PathVariable(value = "flightNumber") String flightNumber,
@@ -58,6 +67,13 @@ public class FlightController {
         return responseEntity;
     }
 
+
+    /**
+     *
+     * @param flightNumber flightNumber for new Flight
+     * @param params map with (parameters,values) as (keys,values)
+     * @return The newly created flight
+     */
     @JsonView({FlightView.summary.class})
     @PostMapping(path = "/{flightNumber}")
     public ResponseEntity createFlight(@PathVariable(value = "flightNumber") String flightNumber, @RequestParam Map<String, String> params){
@@ -71,6 +87,11 @@ public class FlightController {
         return entity;
     }
 
+    /**
+     *
+     * @param flightNumber flightNumber which is wanted deleted
+     * @return Details of the deleted flight
+     */
     @DeleteMapping(path = "/{flightNumber}")
     public ResponseEntity deleteFlight(@PathVariable(value = "flightNumber") String flightNumber){
         ResponseEntity entity = null;
