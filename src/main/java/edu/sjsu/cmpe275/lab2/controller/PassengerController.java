@@ -35,10 +35,10 @@ public class PassengerController {
     // API 1&2
 
     /**
-     *
-     * @param id passengerId of passenger to be displayed
-     * @param map pass xml=true for XML format
-     * @return Passenger details including reservations and flights
+     * Fetches Passenger Details from database by Passenger Id
+     * @param id Passenger Id
+     * @param xml boolean value to inform type of response json or xml
+     * @return
      */
     @JsonView({PassengerView.summary.class})
     @GetMapping(path = "/{id}")
@@ -49,11 +49,9 @@ public class PassengerController {
             isResponseTypeXML = true;
         }
         return passengerService.findByPassengerId(id, isResponseTypeXML);
-        //Return XML if map.get("xml") is true
     }
 
     //Update Passenger Details. API4
-
     /**
      *
      * @param id passengerId of passenger whose record is to change
@@ -64,7 +62,6 @@ public class PassengerController {
     public ResponseEntity updatePassenger(@PathVariable("id") String id, Map<String,String> map){
         ResponseEntity responseEntity = passengerService.updatePassenger(id,map);
         return responseEntity;
-
     }
 
     //Delete passenger. API 5
