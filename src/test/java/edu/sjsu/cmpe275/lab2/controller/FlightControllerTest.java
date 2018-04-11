@@ -48,30 +48,44 @@ public class FlightControllerTest {
 
 
     @Test
-    public void fetchFlight() throws UnirestException {
+    // Positive test, if lfight exists
+    public void fetchFlight_pos() throws UnirestException {
         HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/flight/121").asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
+    @Test
+    // Negative test, if flight does not exist
+    public void fetchFlight_neg() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/flight/001").asObject(String.class);
+        Assert.assertEquals(HttpStatus.NOT_FOUND.value(),jsonresponse.getStatus());
+    }
 
     @Test
+    //Positive test, flight creation
     public void createFlight() throws UnirestException {
-        HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:8888/flight/121?price=150&from=Houston&to=San%20Jose&departureTime=2018-05-16-13&arrivalTime=2018-05-16-17&description=Direct%20flight&capacity=50&model=Boeing%20747&manufacturer=airbus&year=1993")
+        HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:8888/flight/101?price=150&from=Houston&to=San%20Jose&departureTime=2018-05-16-13&arrivalTime=2018-05-16-17&description=Direct%20flight&capacity=50&model=Boeing%20747&manufacturer=airbus&year=1993")
                 .header("accept","application/json")
                 .queryString("apiKey","121")
                 .asJson()
                 ;
-        System.out.println(jsonResponse.getBody());
+        Assert.assertEquals(HttpStatus.OK.value(),jsonResponse.getStatus());
 
     }
 
     @Test
-    public void deleteFlight() throws UnirestException {
-        HttpResponse response = Unirest.delete("http://localhost:8888/flight/121").asString();
+    //Positive test, if flight exists
+    public void deleteFlight_pos() throws UnirestException {
+        HttpResponse response = Unirest.delete("http://localhost:8888/flight/101").asString();
         int status = response.getStatus();
         System.out.println(status);
-        Assert.assertEquals(status,HttpStatus.OK);
+        Assert.assertEquals(status,HttpStatus.OK.value());
+    }
 
-
-
+    @Test
+    //Negative test, if flight doesn't exists
+    public void deleteFlight_neg() throws UnirestException {
+        HttpResponse response = Unirest.delete("http://localhost:8888/flight/100").asString();
+        int status = response.getStatus();
+        Assert.assertEquals(status,400);
     }
 }

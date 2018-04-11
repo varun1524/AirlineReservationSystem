@@ -43,34 +43,59 @@ public class PassengerControllerTest {
     }
 
     @Test
+    // Positive test for making Passenger
+    // There cannot be negative as URL will always have those parameters (as given)
     public void createPassenger() throws UnirestException {
-        String url = "http://localhost:8888/passenger?firstname=sannisth&lastname=shah&age=22&gender=male&phone=91343232";
+        String url = "http://localhost:8888/passenger?firstname=sannisth&lastname=shah&age=22&gender=male&phone=123321";
         HttpResponse<String> jsonresponse = Unirest.post(url).asObject(String.class);
-        Assert.assertEquals(HttpStatus.OK,jsonresponse.getStatus());
-
-    }
-
-    @Test
-    public void displayPassenger() throws UnirestException {
-        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/passenger/aecb25dc-5d7f-49de-ba26-41eb3badc9c3").asObject(String.class);
+        String str = jsonresponse.getBody();
+        System.out.println(str);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
 
     }
 
+    @Test
+    // Positive test for displaying passenger
+    public void displayPassenger_pos() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/passenger/26cc83af-9443-4ec7-8913-945d3f983f0d").asObject(String.class);
+        Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
+
+    }
+
+    @Test
+    //Negative test if passenger doesn't exist
+    public void displayPassenger_neg() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/passenger/any-random-string").asObject(String.class);
+        System.out.println(jsonresponse.getStatus());
+        Assert.assertEquals(500,jsonresponse.getStatus());
+    }
     @Test
     public void updatePassenger() throws UnirestException {
-        String url = "http://localhost:8888/passenger/aecb25dc-5d7f-49de-ba26-41eb3badc9c3?firstname=sannisth&lastname=shah&age=25&gender=female&phone=4352343232";
-        HttpResponse<String> jsonresponse = Unirest.get(url).asObject(String.class);
+        String url = "http://localhost:8888/passenger/ee99d5c9-bb1a-44*a9-a5ad-a4d103999db9?firstname=XX&lastname=YY&age=11&gender=famale&phone=123";
+        HttpResponse<String> jsonresponse = Unirest.put(url).asObject(String.class);
         Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
     }
 
     @Test
-    public void deletePassenger() throws UnirestException {
-        createPassenger();
-        HttpResponse response = Unirest.delete("http://localhost:8888/passenger/").asString();
+    // Deleting passenger if passenger exists
+    public void deletePassenger_pos() throws UnirestException {
+        //createPassenger();
+        HttpResponse response = Unirest.delete("http://localhost:8888/passenger/aecb25dc-5d7f-49de-ba26-41eb3badc9c3").asString();
 //        HttpRequestWithBody response = Unirest.delete("http://localhost:8888/flight/121");
         int status = response.getStatus();
         System.out.println(status);
-        Assert.assertEquals(status,HttpStatus.OK);
+        Assert.assertEquals(status,400);
+    }
+
+
+    @Test
+    // Deleting passenger if passenger does not exists
+    public void deletePassenger_neg() throws UnirestException {
+        //createPassenger();
+        HttpResponse response = Unirest.delete("http://localhost:8888/passenger/any-random-string").asString();
+//        HttpRequestWithBody response = Unirest.delete("http://localhost:8888/flight/121");
+        int status = response.getStatus();
+        System.out.println(status);
+        Assert.assertEquals(400,status);
     }
 }
