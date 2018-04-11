@@ -24,34 +24,14 @@ public class FlightControllerTest {
 
 
     /**
-     * Tests existence of flight in database
-     * @throws UnirestException
-     */
-    @Test
-    public void stage2_fetchFlight_pos() throws UnirestException {
-        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/flight/121").asObject(String.class);
-        Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
-    }
-
-    /**
-     * Tests non-existence of flight
-     * @throws UnirestException
-     */
-    @Test
-    public void stage3_fetchFlight_neg() throws UnirestException {
-        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8888/flight/001").asObject(String.class);
-        Assert.assertEquals(HttpStatus.NOT_FOUND.value(),jsonresponse.getStatus());
-    }
-
-    /**
      * Test if flight can be created
      * @throws UnirestException
      */
     @Test
     public void stage1_createFlight() throws UnirestException {
-        HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:8888/flight/101?price=150&from=Houston&to=San%20Jose&departureTime=2018-05-16-13&arrivalTime=2018-05-16-17&description=Direct%20flight&capacity=50&model=Boeing%20747&manufacturer=airbus&year=1993")
+        HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:8080/flight/131?price=150&from=Houston&to=San%20Jose&departureTime=2018-05-16-13&arrivalTime=2018-05-16-17&description=Direct%20flight&capacity=50&model=Boeing%20747&manufacturer=airbus&year=1993")
                 .header("accept","application/json")
-                .queryString("apiKey","121")
+                .queryString("apiKey","131")
                 .asJson()
                 ;
         Assert.assertEquals(HttpStatus.OK.value(),jsonResponse.getStatus());
@@ -60,15 +40,36 @@ public class FlightControllerTest {
 
 
     /**
+     * Tests existence of flight in database
+     * @throws UnirestException
+     */
+    @Test
+    public void stage2_fetchFlight_pos() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8080/flight/131").asObject(String.class);
+        Assert.assertEquals(HttpStatus.OK.value(),jsonresponse.getStatus());
+    }
+
+
+    /**
      * Tests deleting a flight in database
      * @throws UnirestException
      */
     @Test
-    public void stage4_deleteFlight_pos() throws UnirestException {
-        HttpResponse response = Unirest.delete("http://localhost:8888/flight/121").asString();
+    public void stage3_deleteFlight_pos() throws UnirestException {
+        HttpResponse response = Unirest.delete("http://localhost:8080/flight/131").asString();
         int status = response.getStatus();
         System.out.println(status);
         Assert.assertEquals(status,HttpStatus.OK.value());
+    }
+
+    /**
+     * Tests non-existence of flight
+     * @throws UnirestException
+     */
+    @Test
+    public void stage4_fetchFlight_neg() throws UnirestException {
+        HttpResponse<String> jsonresponse = Unirest.get("http://localhost:8080/flight/131").asObject(String.class);
+        Assert.assertEquals(HttpStatus.NOT_FOUND.value(),jsonresponse.getStatus());
     }
 
     /**
@@ -77,7 +78,7 @@ public class FlightControllerTest {
      */
     @Test
     public void stage5_deleteFlight_neg() throws UnirestException {
-        HttpResponse response = Unirest.delete("http://localhost:8888/flight/100").asString();
+        HttpResponse response = Unirest.delete("http://localhost:8080/flight/131").asString();
         int status = response.getStatus();
         Assert.assertEquals(status,400);
     }
