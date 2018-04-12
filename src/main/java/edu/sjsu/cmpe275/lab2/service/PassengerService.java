@@ -85,15 +85,17 @@ public class PassengerService {
      * @param map Passenger data in key-value pair
      * @return ResponseEntity Object with JSON response
      */
-    public ResponseEntity<Passenger> updatePassenger(String id, Map<String,String> map) {
-        ResponseEntity<Passenger> responseEntity = null;
+    public ResponseEntity updatePassenger(String id, Map<String,String> map) {
+        ResponseEntity responseEntity = new ResponseEntity(responseService.getJSONResponse("Passenger record does not exist with given passengerId: " + id, HttpStatus.NOT_FOUND, "Bad Request"), HttpStatus.NOT_FOUND);
         Passenger passenger = passengerRepository.findByPassengerId(id);
-        passenger.setFirstname(map.get("firstname"));
-        passenger.setLastname(map.get("lastname"));
-        passenger.setAge(Integer.parseInt(map.get("age")));
-        passenger.setGender(map.get("gender"));
-        passenger.setPhone(map.get("phone"));
-        responseEntity = new ResponseEntity(passenger.getWholePassengerDetailsJSON().toString(), HttpStatus.OK);
+        if(passenger!=null){
+            passenger.setFirstname(map.get("firstname"));
+            passenger.setLastname(map.get("lastname"));
+            passenger.setAge(Integer.parseInt(map.get("age")));
+            passenger.setGender(map.get("gender"));
+            passenger.setPhone(map.get("phone"));
+            responseEntity = new ResponseEntity(passenger.getWholePassengerDetailsJSON().toString(), HttpStatus.OK);
+        }
         return responseEntity;
 
     }
