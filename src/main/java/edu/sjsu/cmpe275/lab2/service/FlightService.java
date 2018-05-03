@@ -94,9 +94,10 @@ public class FlightService {
             }
 
             if (flight == null) {
+                System.out.println("Flight is empty");
                 Flight flightObj = flightRepository.save(receivedFlight);
                 if(flightObj!=null){
-                    responseEntity = new ResponseEntity(flightObj.getWholeFlightDetailsJSON(), HttpStatus.OK);
+                    responseEntity = new ResponseEntity(flightObj.getWholeFlightDetailsJSON().toString(), HttpStatus.OK);
                 }
                 else {
                     responseEntity = new ResponseEntity(responseService.getJSONResponse("Error while creating Flight", HttpStatus.NOT_FOUND, "Bad Request") ,HttpStatus.NOT_FOUND);
@@ -105,15 +106,16 @@ public class FlightService {
             else {
                 if((flight.getPlane().getCapacity()-flight.getSeatsLeft()) < p.getCapacity()) {
                     if(isFlightUpdatable(flight)) {
+                        receivedFlight.setPassengers(flight.getPassengers());
                         flight = flightRepository.save(receivedFlight);
-                        responseEntity = new ResponseEntity(flight.getWholeFlightDetailsJSON(), HttpStatus.OK);
+                        responseEntity = new ResponseEntity(flight.getWholeFlightDetailsJSON().toString(), HttpStatus.OK);
                     }
                     else {
-                        responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight time operlaps with passenger's ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
+                        responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight time operlaps with passenger's ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.NOT_FOUND);
                     }
                 }
                 else {
-                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight capacity less than already booked tickets ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.OK);
+                    responseEntity = new ResponseEntity(responseService.getJSONResponse("Flight capacity less than already booked tickets ", HttpStatus.BAD_REQUEST, "Bad Request"), HttpStatus.NOT_FOUND);
                 }
             }
         }

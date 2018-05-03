@@ -7,6 +7,7 @@ import edu.sjsu.cmpe275.lab2.repository.FlightRepository;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import edu.sjsu.cmpe275.lab2.repository.ReservationRepository;
 import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author varunshah
@@ -47,7 +49,7 @@ public class ReservationService {
         try{
             reservation = reservationRepository.findByReservationNumber(reservationNumber);
             if(reservation!=null){
-                responseEntity = new ResponseEntity<>(reservation.getWholeReservationDetailsJSON().toString(), HttpStatus.OK);
+                responseEntity = new ResponseEntity<>(XML.toString(reservation.getWholeReservationDetailsJSON()), HttpStatus.OK);
 //                responseEntity = new ResponseEntity<>(reservation, HttpStatus.OK);
             }
             else {
@@ -89,7 +91,7 @@ public class ReservationService {
                     if(flight!=null){
                         newFlightForReservation.add(flight);
                         if(flight.getSeatsLeft()>0) {
-                            List<Flight> previousBookings = passenger.getFlights();
+                            Set<Flight> previousBookings = passenger.getFlights();
                             for(Flight flight1 : previousBookings){
                                 if(flight.getFlightNumber().equals(flight1.getFlightNumber())){
                                     isValidFlight = true;
@@ -184,7 +186,7 @@ public class ReservationService {
             if((tempFlight = flightRepository.findByFlightNumber(flight.getFlightNumber()))!=null){
                 price+=tempFlight.getPrice();
                 tempFlight.setSeatsLeft(tempFlight.getSeatsLeft()-1);
-                List<Passenger> passengers = tempFlight.getPassengers();
+                Set<Passenger> passengers = tempFlight.getPassengers();
                 passengers.add(passenger);
                 tempFlight.setPassengers(passengers);
             }

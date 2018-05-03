@@ -11,7 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author varunshah
@@ -70,9 +72,9 @@ public class Flight {
     private List<Reservation> reservations;
 
     @JsonView({FlightView.summary.class})
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class, cascade = {CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
     @JoinColumn(name = "passenger_id", nullable = false)
-    private List<Passenger> passengers;
+    private Set<Passenger> passengers;
 
     public Flight(){}
 
@@ -153,15 +155,21 @@ public class Flight {
         this.plane = plane;
     }
 
-    public List<Passenger> getPassengers() {
+    public Set<Passenger> getPassengers() {
+        if(passengers==null){
+            return new HashSet<>();
+        }
         return passengers;
     }
 
-    public void setPassengers(List<Passenger> passengers) {
+    public void setPassengers(Set<Passenger> passengers) {
         this.passengers = passengers;
     }
 
     public List<Reservation> getReservations() {
+//     if(passengers==null){
+//            return new LinkedList<>();
+//        }
         return reservations;
     }
 

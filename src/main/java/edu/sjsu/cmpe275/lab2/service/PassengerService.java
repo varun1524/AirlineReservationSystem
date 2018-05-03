@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Sannisth Soni
@@ -143,7 +144,7 @@ public class PassengerService {
                     HttpStatus.BAD_REQUEST);
         }
         else{
-            List<Flight> flightList = passenger.getFlights();
+            Set<Flight> flightList = passenger.getFlights();
             List<Reservation> reservationList = passenger.getReservations();
             for(Flight flight : flightList){
                 if(!flight.getPassengers().remove(passenger)){

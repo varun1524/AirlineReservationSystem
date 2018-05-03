@@ -9,8 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sannisth Soni
@@ -54,18 +53,19 @@ public class Passenger {
 //    @JsonView({PassengerView.summary.class})
     @JsonIgnore
     @ManyToMany(mappedBy = "passengers")
-    private List<Flight> flights;
+    private Set<Flight> flights;
 
     public Passenger(){
-        this.flights = Collections.emptyList();
-        this.reservations = Collections.emptyList();
     }
 
-    public List<Flight> getFlights() {
+    public Set<Flight> getFlights() {
+        if(flights==null){
+            return new HashSet<>();
+        }
         return flights;
     }
 
-    public void setFlights(List<Flight> flights) {
+    public void setFlights(Set<Flight> flights) {
         this.flights = flights;
     }
 
@@ -118,6 +118,9 @@ public class Passenger {
     }
 
     public List<Reservation> getReservations() {
+        if(reservations==null){
+            return new LinkedList<>();
+        }
         return reservations;
     }
 

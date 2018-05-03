@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reservationNumber")
@@ -70,6 +71,9 @@ public class Reservation {
     }
 
     public List<Flight> getFlights() {
+        if(flights==null){
+            return new LinkedList<>();
+        }
         return flights;
     }
 
